@@ -63,6 +63,7 @@ namespace OrderTransfer
                         var resPut =_apiAdvisor.PutOrder(item.ID);
                         
                         //TODO: Gönderildiðine dair yapýlacak iþlemler
+
                     }
                 }
 
