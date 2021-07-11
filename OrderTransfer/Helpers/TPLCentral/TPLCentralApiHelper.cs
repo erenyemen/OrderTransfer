@@ -54,11 +54,15 @@ namespace OrderTransfer.Helpers.TPLCentral
                 _logger.LogInformation($"GetToken: {result.access_token}");
 
             Token = result;
+            Token.AccessTokenCreatedDate = DateTime.Now;
             return result;
         }
 
         public ResultObject PostOrders(Root order)
         {
+            if (Token.IsExpired)
+                GetToken();
+
             var request = new RestRequest(Method.POST);
             request.AddHeader("Authorization", $"Bearer {Token.access_token}");
             request.AddHeader("Content-Type", "application/json");

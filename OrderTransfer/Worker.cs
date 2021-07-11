@@ -1,7 +1,8 @@
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using OrderTransfer.Helpers;
 using OrderTransfer.Helpers.ChannelAdvisor;
+using OrderTransfer.Helpers.Common;
 using OrderTransfer.Helpers.TPLCentral;
 using OrderTransfer.Models;
 using OrderTransfer.Models.ChannelAdvisor;
@@ -12,12 +13,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using OrderTransfer.Helpers.Common;
+
 namespace OrderTransfer
 {
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
+        private readonly IConfiguration _config;
         private readonly IChannelAdvisorSettings _cadSetting;
         private readonly ITPLCentralSettings _tplSetting;
         private readonly IChannelAdvisorApiHelper _apiAdvisor;
@@ -25,12 +27,13 @@ namespace OrderTransfer
         private readonly TokenResult advisorToken;
         private readonly TokenResult centralToken;
 
-        public Worker(ILogger<Worker> logger, IChannelAdvisorSettings cadSetting,
+        public Worker(ILogger<Worker> logger, IConfiguration config, IChannelAdvisorSettings cadSetting,
             ITPLCentralSettings tplSetting,
             IChannelAdvisorApiHelper apiAdvisor,
             ITPLCentralApiHelper apiCentral)
         {
             _logger = logger;
+            _config = config;
             _cadSetting = cadSetting;
             _tplSetting = tplSetting;
             _apiAdvisor = apiAdvisor;
@@ -48,12 +51,15 @@ namespace OrderTransfer
 
                 foreach (var item in listAdvisorOrders.OrderByDescending(x => x.CreatedDateUtc))
                 {
+                    // 3PL Cental nesnesi oluþturuluyor.
                     Root postObject = CreateTplCentralObject(item);
 
+                    // 3PL Cental' a sipariþ (order) gönderiliyor.
                     var res = _apiCentral.PostOrders(postObject);
 
                     if (res.IsSuccessful)
                     {
+                        // Channel Advisor' da sipariþ, 'Bekleyen Sevkiyat (Pending Shipment)' durumuna çekiliyor.
                         var resPut =_apiAdvisor.PutOrder(item.ID);
                         
                         //TODO: Gönderildiðine dair yapýlacak iþlemler
@@ -61,12 +67,12 @@ namespace OrderTransfer
                 }
 
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                await Task.Delay(1000, stoppingToken);
+                await Task.Delay(1000 * _config.GetValue<int>("WorkingTime"), stoppingToken); //1000 * 60 *
             }
         }
 
         /// <summary>
-        /// 
+        /// Channel Advisor'dan Order bilgilerini getirir.
         /// </summary>
         /// <returns></returns>
         private List<Order> GetOrdersByChannelAdvisor()

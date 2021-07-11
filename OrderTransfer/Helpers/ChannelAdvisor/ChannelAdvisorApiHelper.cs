@@ -35,13 +35,13 @@ namespace OrderTransfer.Helpers.ChannelAdvisor
             request.AddParameter("scope", _settings.IdentityInfo.Scope);
 
             string url = $"{_settings.BaseURL}{_settings.GetTOKEN_URL}";
-
             var result = CallApi<TokenResult, ChannelAdvisorApiHelper>(url, request, _logger);
 
             if (result != null && result.access_token != null)
                 _logger.LogInformation($"GetToken: {result.access_token}");
 
             Token = result;
+            Token.AccessTokenCreatedDate = DateTime.Now;
             return result;
         }
 
@@ -58,11 +58,16 @@ namespace OrderTransfer.Helpers.ChannelAdvisor
             if (result != null && result.access_token != null)
                 _logger.LogInformation($"GetRefreshToken: {result.access_token}");
 
+            Token = result;
+            Token.AccessTokenCreatedDate = DateTime.Now;
             return result;
         }
 
         public List<Order> GetOrders()
         {
+            if (Token.IsExpired)
+                GetToken();
+
             List<Order> result;
             var request = new RestRequest(Method.GET);
             request.AddHeader("Authorization", $"Bearer {Token.access_token}");
@@ -71,7 +76,7 @@ namespace OrderTransfer.Helpers.ChannelAdvisor
             var responseObject = CallApi<OrderResponse, ChannelAdvisorApiHelper>($"{_settings.BaseURL}{_settings.GetOrders_URL}", request, _logger);
             result = responseObject.value;
 
-            // Pages
+            // paging
             if (!string.IsNullOrEmpty(responseObject.OdataNextLink))
             {
                 OrderResponse responseOdataNextLink;
@@ -86,11 +91,16 @@ namespace OrderTransfer.Helpers.ChannelAdvisor
                 } while (!string.IsNullOrEmpty(responseOdataNextLink.OdataNextLink));
             }
 
+            _logger.LogInformation($"Orders Count: {result.Count}");
+
             return result;
         }
 
         public ResultObject PutOrder(int orderId)
         {
+            if (Token.IsExpired)
+                GetToken();
+
             var request = new RestRequest(Method.PUT);
             request.AddHeader("Authorization", $"Bearer {Token.access_token}");
             request.AddHeader("Content-Type", "application/json");

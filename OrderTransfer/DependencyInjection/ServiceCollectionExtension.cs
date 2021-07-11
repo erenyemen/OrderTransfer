@@ -18,8 +18,8 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static IServiceCollection AddChannelAdvisorApi(this IServiceCollection services)
         {
-            var requestContextService = (IChannelAdvisorSettings)services.BuildServiceProvider().GetService(typeof(IChannelAdvisorSettings));
-            var logger = (ILogger<ChannelAdvisorApiHelper>)services.BuildServiceProvider().GetService(typeof(ILogger<ChannelAdvisorApiHelper>));
+            var requestContextService = services.GetServiceCollectionObject<IChannelAdvisorSettings>();
+            var logger = services.GetServiceCollectionObject<ILogger<ChannelAdvisorApiHelper>>();
 
             services.AddSingleton<IChannelAdvisorApiHelper>(s => new ChannelAdvisorApiHelper(logger, requestContextService));
 

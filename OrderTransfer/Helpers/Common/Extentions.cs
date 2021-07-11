@@ -10,7 +10,7 @@ namespace OrderTransfer.Helpers.Common
             IRestResponse response = client.Execute(request);
 
             if (!response.IsSuccessful)
-                logger.LogError(response.ErrorMessage == null ? response.Content : response.ErrorMessage);
+                logger.LogError($"{response.StatusCode.ToString()}, Error Detail: {(response.ErrorMessage == null ? response.Content : response.ErrorMessage)}");
 
             return response;
         }

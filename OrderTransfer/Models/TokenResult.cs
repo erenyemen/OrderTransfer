@@ -1,4 +1,6 @@
-﻿namespace OrderTransfer.Models
+﻿using System;
+
+namespace OrderTransfer.Models
 {
     public class TokenResult
     {
@@ -11,5 +13,18 @@
         public string scope { get; set; }
 
         public string error { get; set; }
+
+        public DateTime AccessTokenCreatedDate { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool IsExpired 
+        {
+            get
+            {
+                return AccessTokenCreatedDate.AddMinutes(40) <= DateTime.Now ? true : false;
+            }
+        }
     }
 }
