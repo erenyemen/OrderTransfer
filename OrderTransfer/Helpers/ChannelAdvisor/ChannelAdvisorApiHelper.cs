@@ -6,7 +6,6 @@ using OrderTransfer.Models.Settings;
 using RestSharp;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace OrderTransfer.Helpers.ChannelAdvisor
 {
@@ -35,14 +34,14 @@ namespace OrderTransfer.Helpers.ChannelAdvisor
             request.AddParameter("scope", _settings.IdentityInfo.Scope);
 
             string url = $"{_settings.BaseURL}{_settings.GetTOKEN_URL}";
-            var result = CallApi<TokenResult, ChannelAdvisorApiHelper>(url, request, _logger);
+            var result = CallApi<TokenResult, ChannelAdvisorApiHelper>(url, request, _logger);//CallApiDeserialize
 
-            if (result != null && result.access_token != null)
-                _logger.LogInformation($"GetToken: {result.access_token}");
+            if (result != null && result.Result.access_token != null)
+                _logger.LogInformation($"GetToken: {result.Result.access_token}");
 
-            Token = result;
+            Token = result.Result;
             Token.AccessTokenCreatedDate = DateTime.Now;
-            return result;
+            return result.Result;
         }
 
         public TokenResult GetRefreshToken()
@@ -53,14 +52,14 @@ namespace OrderTransfer.Helpers.ChannelAdvisor
             request.AddParameter("refresh_token", _settings.IdentityInfo.RefreshToken);
 
             string url = $"{_settings.BaseURL}{_settings.GetTOKEN_URL}";
-            var result = CallApi<TokenResult, ChannelAdvisorApiHelper>(url, request, _logger);
+            var result = CallApi<TokenResult, ChannelAdvisorApiHelper>(url, request, _logger);//CallApiDeserialize
 
-            if (result != null && result.access_token != null)
-                _logger.LogInformation($"GetRefreshToken: {result.access_token}");
+            if (result != null && result.Result.access_token != null)
+                _logger.LogInformation($"GetRefreshToken: {result.Result.access_token}");
 
-            Token = result;
+            Token = result.Result;
             Token.AccessTokenCreatedDate = DateTime.Now;
-            return result;
+            return result.Result;
         }
 
         public List<Order> GetOrders()
@@ -74,16 +73,16 @@ namespace OrderTransfer.Helpers.ChannelAdvisor
             request.AddHeader("Content-Type", "application/json");
 
             var responseObject = CallApi<OrderResponse, ChannelAdvisorApiHelper>($"{_settings.BaseURL}{_settings.GetOrders_URL}", request, _logger);
-            result = responseObject.value;
+            result = responseObject.Result.value;
 
             // paging
-            if (!string.IsNullOrEmpty(responseObject.OdataNextLink))
+            if (!string.IsNullOrEmpty(responseObject.Result.OdataNextLink))
             {
                 OrderResponse responseOdataNextLink;
-                var nextLink = responseObject.OdataNextLink;
+                var nextLink = responseObject.Result.OdataNextLink;
                 do
                 {
-                    responseOdataNextLink = CallApi<OrderResponse, ChannelAdvisorApiHelper>(nextLink, request, _logger);
+                    responseOdataNextLink = CallApi<OrderResponse, ChannelAdvisorApiHelper>(nextLink, request, _logger).Result;
                     result.AddRange(responseOdataNextLink.value);
 
                     nextLink = responseOdataNextLink.OdataNextLink;
@@ -96,7 +95,7 @@ namespace OrderTransfer.Helpers.ChannelAdvisor
             return result;
         }
 
-        public ResultObject PutOrder(int orderId)
+        public ResultObject<T> PutOrder<T>(int orderId) where T: class
         {
             if (Token.IsExpired)
                 GetToken();
@@ -111,7 +110,7 @@ namespace OrderTransfer.Helpers.ChannelAdvisor
             string url = $"{_settings.BaseURL}{_settings.PutOrder_URL}";
             url = string.Format(url, orderId);
 
-            var response = CallApi<ChannelAdvisorApiHelper>(url, request, _logger);
+            var response = CallApi<T,ChannelAdvisorApiHelper>(url, request, _logger);
 
             return response;
         }

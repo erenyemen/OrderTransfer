@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace OrderTransfer.Models.TPLCentral
 {
@@ -15,5 +16,19 @@ namespace OrderTransfer.Models.TPLCentral
         public ShipTo shipTo { get; set; }
         public string notes { get; set; }
         public string shippingNotes { get; set; }
+
+        //public Embedded _embedded { get; set; }
+    }
+
+    public class HttpApi3plCentralComRelsOrdersItem
+    {
+        public ItemIdentifier itemIdentifier { get; set; }
+        public double qty { get; set; }
+    }
+
+    public class Embedded
+    {
+        [JsonPropertyName("http://api.3plCentral.com/rels/orders/item")]
+        public List<HttpApi3plCentralComRelsOrdersItem> HttpApi3plCentralComRelsOrdersItem { get; set; }
     }
 }

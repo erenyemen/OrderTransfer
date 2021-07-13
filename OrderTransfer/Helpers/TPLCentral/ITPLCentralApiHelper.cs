@@ -6,6 +6,8 @@ namespace OrderTransfer.Helpers.TPLCentral
 {
     public interface ITPLCentralApiHelper : IApiHelper
     {
-        public ResultObject PostOrders(Root order);
+        public ResultObject<T> PostOrders<T>(Root order) where T : class;
+
+        public ResultObject<T> PostOrderConfirm<T>(OrderConfirm confirm, int orderId, string eTag) where T : class;
     }
 }

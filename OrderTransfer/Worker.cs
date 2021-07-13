@@ -16,6 +16,11 @@ using System.Threading.Tasks;
 
 namespace OrderTransfer
 {
+    /// <summary>
+    /// https://complete.channeladvisor.com/Orders/AllOrders.mvc/List?apid=12036490&filter=ldxJsmY-b9NIVUT34CeUc7ocCIk
+    /// https://developer.channeladvisor.com/working-with-orders/fulfillments/mark-an-existing-fulfillment-as-shipped
+    /// https://developer.3plcentral.com/#intro
+    /// </summary>
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
@@ -51,24 +56,31 @@ namespace OrderTransfer
 
                 foreach (var item in listAdvisorOrders.OrderByDescending(x => x.CreatedDateUtc))
                 {
-                    // 3PL Cental nesnesi oluþturuluyor.
-                    Root postObject = CreateTplCentralObject(item);
-
                     // 3PL Cental' a sipariþ (order) gönderiliyor.
-                    var res = _apiCentral.PostOrders(postObject);
+                    var res = _apiCentral.PostOrders<PostOrderResponse>(CreateTplCentralObject(item));
 
                     if (res.IsSuccessful)
                     {
+
+                        OrderConfirm oc = new OrderConfirm()
+                        {
+                            confirmDate = DateTime.Now,
+                            trackingNumber = item.Fulfillments[0].TrackingNumber,
+                            recalcAutoCharges = false
+                        };
+                        // 3PL Central - Confirm Order 3PL Central
+                        var resConfirm = _apiCentral.PostOrderConfirm<string>(oc, res.Result.ReadOnly.OrderId, res.Etag);
+
                         // Channel Advisor' da sipariþ, 'Bekleyen Sevkiyat (Pending Shipment)' durumuna çekiliyor.
-                        var resPut =_apiAdvisor.PutOrder(item.ID);
-                        
+                        var resPut = _apiAdvisor.PutOrder<string>(item.ID);
+
                         //TODO: Gönderildiðine dair yapýlacak iþlemler
 
                     }
                 }
 
                 _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                await Task.Delay(1000 * _config.GetValue<int>("WorkingTime"), stoppingToken); //1000 * 60 *
+                await Task.Delay(1000 * 60 * _config.GetValue<int>("WorkingTime"), stoppingToken);
             }
         }
 
@@ -81,24 +93,12 @@ namespace OrderTransfer
             return _apiAdvisor.GetOrders();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="item"></param>
-        /// <returns></returns>
         private Root CreateTplCentralObject(Order item)
         {
-            Root returnObject = new Root()
+            return new Root()
             {
-                customerIdentifier = new CustomerIdentifier()
-                {
-                    Id = 1
-                },
-                facilityIdentifier = new FacilityIdentifier()
-                {
-                    Id = 1,
-                    Name = "DropRight"
-                },
+                customerIdentifier = new CustomerIdentifier()  {  Id = 1 },
+                facilityIdentifier = new FacilityIdentifier() { Id = 1, Name = "DropRight" },
                 orderItems = OrderItemsMapper(item.Items),
                 referenceNum = item.ID.ToString(),
                 notes = item.PublicNotes,
@@ -117,8 +117,26 @@ namespace OrderTransfer
                     zip = item.ShippingPostalCode
                 }
             };
+        }
 
-            return returnObject;
+        private List<Models.TPLCentral.HttpApi3plCentralComRelsOrdersItem> EmbededItemsMapper(List<Models.ChannelAdvisor.OrderItem> items)
+        {
+            List<Models.TPLCentral.HttpApi3plCentralComRelsOrdersItem> result = new List<Models.TPLCentral.HttpApi3plCentralComRelsOrdersItem>();
+
+            Models.TPLCentral.HttpApi3plCentralComRelsOrdersItem resultItem;
+            foreach (var item in items)
+            {
+                resultItem = new Models.TPLCentral.HttpApi3plCentralComRelsOrdersItem()
+                {
+                    //NOTE: SKU , Müþteri için 3PL Central'da ayarlananla tam olarak eþleþmelidir.
+                    itemIdentifier = new ItemIdentifier() { /*Id = item.ID,*/ sku = item.Sku },
+                    qty = item.Quantity
+                };
+
+                result.Add(resultItem);
+            }
+
+            return result;
         }
 
         private List<Models.TPLCentral.OrderItem> OrderItemsMapper(List<Models.ChannelAdvisor.OrderItem> items)

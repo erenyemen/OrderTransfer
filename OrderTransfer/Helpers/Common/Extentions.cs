@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using OrderTransfer.Helpers.Serializer;
 using RestSharp;
 
 namespace OrderTransfer.Helpers.Common
@@ -18,6 +19,11 @@ namespace OrderTransfer.Helpers.Common
         public static string ToStringByTrim(this string item)
         {
             return item == null ? string.Empty : item.Trim();
+        }
+
+        public static string Serialize(this object obj)
+        {
+            return JsonHelper.Serialize(obj);
         }
     }
 }

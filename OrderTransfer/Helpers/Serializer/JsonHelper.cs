@@ -8,9 +8,7 @@ namespace OrderTransfer.Helpers.Serializer
     {
         public static string Serialize(object obj)
         {
-            string jsonString = JsonSerializer.Serialize(obj);
-
-            return jsonString;
+            return JsonSerializer.Serialize(obj);
         }
 
         public static T Deserialize<T, logObject>(string jsonString, ILogger<logObject> logger) where T : class

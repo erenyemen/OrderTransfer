@@ -1,10 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace OrderTransfer
 {
@@ -22,10 +18,10 @@ namespace OrderTransfer
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddConfigurations(configuration);
-                    services.AddChannelAdvisorApi();
-                    services.AddTplCentralApi();
-                    services.AddHostedService<Worker>();
+                    services.AddConfigurations(configuration)
+                            .AddChannelAdvisorApi()
+                            .AddTplCentralApi()
+                            .AddHostedService<Worker>();
                 });
 
         private static IConfiguration GetConfiguration(string[] args)

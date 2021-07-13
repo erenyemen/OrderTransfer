@@ -38,9 +38,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static T GetServiceCollectionObject<T>(this IServiceCollection services)
         {
-            var res = (T)services.BuildServiceProvider().GetService(typeof(T));
-
-            return res;
+            return (T)services.BuildServiceProvider().GetService(typeof(T));
         }
     }
 }

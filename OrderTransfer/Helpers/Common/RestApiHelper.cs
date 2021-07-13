@@ -8,44 +8,40 @@ namespace OrderTransfer.Helpers.Common
 {
     public abstract class RestApiHelper
     {
-        public virtual T CallApi<T,logObject>(string url, RestRequest request, ILogger<logObject> logger) where T : class
+        public ResultObject<T> CallApi<T,logObject>(string url, RestRequest request, ILogger<logObject> logger, 
+            HttpBasicAuthenticator basicAuth = null) where T: class
         {
-            var client = new RestClient(url);
-            client.Timeout = -1;
+            ResultObject<T> result;
 
-            IRestResponse response = client.Executer<logObject>(request, logger);
+            var client = new RestClient(url) { Timeout = -1 };
 
-            response.Content = response.Content.Replace("@odata.nextLink", "OdataNextLink").Replace("@odata.context", "OdataContext");
+            if (basicAuth != null) client.Authenticator = basicAuth;
 
-            T responseObject = JsonHelper.Deserialize<T, logObject>(response.Content, logger);
+            IRestResponse response = client.Executer(request, logger);
 
-            return responseObject;
+            result = new ResultObject<T>()
+            {
+                response = response,
+                IsSuccessful = response.IsSuccessful,
+                Content = response.Content,
+                Etag = GetETaginHeader(response),
+                Result = JsonHelper.Deserialize<T, logObject>(response.Content, logger)
+            };
+
+            return result;
         }
 
-        public virtual T CallApiBasicAuth<T, logObject>(string url, HttpBasicAuthenticator basicAuth, RestRequest request, ILogger<logObject> logger) where T : class where logObject : class
+        public string GetETaginHeader(IRestResponse response)
         {
-            var client = new RestClient(url);
-            client.Timeout = -1;
-            client.Authenticator = basicAuth;
+            string result = string.Empty;
 
-            IRestResponse response = client.Executer<logObject>(request, logger);
-
-            T responseObject = JsonHelper.Deserialize<T, logObject>(response.Content, logger);
-
-            return responseObject;
-        }
-
-        public ResultObject CallApi<logObject>(string url, RestRequest request, ILogger<logObject> logger)
-        {
-            ResultObject result = new ResultObject();
-
-            var client = new RestClient(url);
-            client.Timeout = -1;
-
-            IRestResponse response = client.Executer<logObject>(request, logger);
-
-            result.IsSuccessful = response.IsSuccessful;
-            result.Content = response.Content;
+            foreach (var item in response.Headers)
+            {
+                if (item.Name == "ETag")
+                {
+                    result = item.Value.ToString(); break;
+                }
+            }
 
             return result;
         }

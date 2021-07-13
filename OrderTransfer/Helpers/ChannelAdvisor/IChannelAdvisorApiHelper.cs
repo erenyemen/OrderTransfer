@@ -9,6 +9,6 @@ namespace OrderTransfer.Helpers.ChannelAdvisor
     {
         public List<Order> GetOrders();
 
-        public ResultObject PutOrder(int orderId);
+        public ResultObject<T> PutOrder<T>(int orderId) where T: class;
     }
 }
