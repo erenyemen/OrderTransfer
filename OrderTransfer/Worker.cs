@@ -54,28 +54,30 @@ namespace OrderTransfer
             {
                 List<Order> listAdvisorOrders = GetOrdersByChannelAdvisor();
 
-                foreach (var item in listAdvisorOrders.OrderByDescending(x => x.CreatedDateUtc))
+                foreach (var item in listAdvisorOrders)// OrderByDescending(x => x.CreatedDateUtc)
                 {
                     // 3PL Cental' a sipariþ (order) gönderiliyor.
                     var res = _apiCentral.PostOrders<PostOrderResponse>(CreateTplCentralObject(item));
 
                     if (res.IsSuccessful)
                     {
+                        #region Comment
 
-                        OrderConfirm oc = new OrderConfirm()
-                        {
-                            confirmDate = DateTime.Now,
-                            trackingNumber = item.Fulfillments[0].TrackingNumber,
-                            recalcAutoCharges = false
-                        };
+                        //OrderConfirm oc = new OrderConfirm()
+                        //{
+                        //    confirmDate = DateTime.Now,
+                        //    trackingNumber = item.Fulfillments[0].TrackingNumber,
+                        //    recalcAutoCharges = false
+                        //};
                         // 3PL Central - Confirm Order 3PL Central
-                        var resConfirm = _apiCentral.PostOrderConfirm<string>(oc, res.Result.ReadOnly.OrderId, res.Etag);
+                        //var resConfirm = _apiCentral.PostOrderConfirm<string>(oc, res.Result.ReadOnly.OrderId, res.Etag);
+
+                        #endregion Comment
 
                         // Channel Advisor' da sipariþ, 'Bekleyen Sevkiyat (Pending Shipment)' durumuna çekiliyor.
                         var resPut = _apiAdvisor.PutOrder<string>(item.ID);
 
                         //TODO: Gönderildiðine dair yapýlacak iþlemler
-
                     }
                 }
 
@@ -97,24 +99,26 @@ namespace OrderTransfer
         {
             return new Root()
             {
-                customerIdentifier = new CustomerIdentifier()  {  Id = 1 },
+                customerIdentifier = new CustomerIdentifier() { Id = 1 },
                 facilityIdentifier = new FacilityIdentifier() { Id = 1, Name = "DropRight" },
                 orderItems = OrderItemsMapper(item.Items),
-                referenceNum = item.ID.ToString(),
+                referenceNum = item.SiteOrderID,
                 notes = item.PublicNotes,
                 shippingNotes = item.PrivateNotes,
                 billingCode = "Sender",//TODO: Bilgi Yok.
-                routingInfo = RoutingInfoMapper(item.Fulfillments.FirstOrDefault()),
+                //routingInfo = RoutingInfoMapper(item.Fulfillments.FirstOrDefault()),
                 shipTo = new ShipTo()
                 {
                     address1 = item.ShippingAddressLine1,
                     address2 = item.ShippingAddressLine2,
                     city = item.ShippingCity,
-                    companyName = item.ShippingCompanyName,
+                    companyName = string.IsNullOrEmpty(item.ShippingCompanyName) ? $"{item.ShippingFirstName.ToStringByTrim()} {item.ShippingLastName.ToStringByTrim()}" : item.ShippingCompanyName,
                     country = item.ShippingCountry,
                     name = $"{item.ShippingFirstName.ToStringByTrim()} {item.ShippingLastName.ToStringByTrim()}",
                     state = item.ShippingStateOrProvinceName,
-                    zip = item.ShippingPostalCode
+                    zip = item.ShippingPostalCode,
+                    phoneNumber = item.ShippingDaytimePhone,
+                    emailAddress = item.BuyerEmailAddress
                 }
             };
         }

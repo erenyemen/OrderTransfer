@@ -10,5 +10,7 @@
         public string state { get; set; }
         public string zip { get; set; }
         public string country { get; set; }
+        public string phoneNumber { get; set; }
+        public string emailAddress { get; set; }
     }
 }

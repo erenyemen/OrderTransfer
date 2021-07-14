@@ -110,7 +110,7 @@ namespace OrderTransfer.Helpers.ChannelAdvisor
             string url = $"{_settings.BaseURL}{_settings.PutOrder_URL}";
             url = string.Format(url, orderId);
 
-            var response = CallApi<T,ChannelAdvisorApiHelper>(url, request, _logger);
+            var response = CallApi<T, ChannelAdvisorApiHelper>(url, request, _logger);
 
             return response;
         }
