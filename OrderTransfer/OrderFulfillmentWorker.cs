@@ -74,17 +74,12 @@ namespace OrderTransfer
                                     DistributionCenterID = item.Fulfillments[0].DistributionCenterID,
                                     DeliveryStatus = "Complete"
                                 }
-                                //DeliveryStatus = "Complete",
-                                //TrackingNumber = TrackingNumber
                             };
 
-                            var resShipped =_apiAdvisor.PutOrderShipped<string>(item.ID, os);//item.Fulfillments[0].ID
+                            var resShipped =_apiAdvisor.PutOrderShipped<string>(item.ID, os);
 
                             if (resShipped.response.IsSuccessful)
-                            {
-
-                            }
-                            //TODO: Send tracking number to advisor.
+                                _logger.LogInformation($"Tracking number send to Channel Advisor - {TrackingNumber}");
                         }
                     }
                 }

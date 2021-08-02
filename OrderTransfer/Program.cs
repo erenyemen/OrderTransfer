@@ -22,8 +22,8 @@ namespace OrderTransfer
                             .AddSeriLogOrderTransfer(configuration)
                             .AddChannelAdvisorApi()
                             .AddTplCentralApi()
-                            .AddHostedService<OrderDeliveryWorker>();
-                            //.AddHostedService<OrderFulfillmentWorker>();
+                            .AddHostedService<OrderDeliveryWorker>()
+                            .AddHostedService<OrderFulfillmentWorker>();
                 });
 
         private static IConfiguration GetConfiguration(string[] args)

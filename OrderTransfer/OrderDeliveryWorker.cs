@@ -54,7 +54,6 @@ namespace OrderTransfer
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            _logger.LogInformation("Order Delivery Worker running at: {time}", DateTimeOffset.Now);
             while (!stoppingToken.IsCancellationRequested)
             {
                 // Channel Advisor'dan Order bilgilerini getirir.

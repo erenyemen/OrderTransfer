@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>dotnet-OrderTransfer-004A23AA-E367-4E0E-BDD9-50BF73122E5D</UserSecretsId>
+    <Authors>Eren YEMEN</Authors>
+    <Copyright>Eren YEMEN</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
