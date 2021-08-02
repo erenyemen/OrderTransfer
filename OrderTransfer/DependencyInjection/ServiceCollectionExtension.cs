@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using OrderTransfer.Helpers.ChannelAdvisor;
 using OrderTransfer.Helpers.TPLCentral;
 using OrderTransfer.Models.Settings;
+using Serilog;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -39,6 +40,21 @@ namespace Microsoft.Extensions.DependencyInjection
         public static T GetServiceCollectionObject<T>(this IServiceCollection services)
         {
             return (T)services.BuildServiceProvider().GetService(typeof(T));
+        }
+
+        public static IServiceCollection AddSeriLogOrderTransfer(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddLogging(builder =>
+            {
+                builder.AddConfiguration(configuration.GetSection("Logging"))
+                  .AddSerilog(new LoggerConfiguration().WriteTo.File("serilog.txt").CreateLogger())
+                  .AddConsole();
+#if DEBUG
+                builder.AddDebug();
+#endif
+            });
+
+            return services;
         }
     }
 }

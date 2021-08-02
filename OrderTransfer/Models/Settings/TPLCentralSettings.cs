@@ -7,7 +7,7 @@
         public string GetTOKEN_URL { get; set; }
         public string PostOrder_URL { get; set; }
         public string GetOrders_URL { get; set; }
-
         public string PostOrderConfirm_URL { get; set; }
+        public string GetTrackingNum_URL { get; set; }
     }
 }

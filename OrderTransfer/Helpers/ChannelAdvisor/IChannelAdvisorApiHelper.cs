@@ -8,7 +8,8 @@ namespace OrderTransfer.Helpers.ChannelAdvisor
     public interface IChannelAdvisorApiHelper : IApiHelper
     {
         public List<Order> GetOrders();
-
-        public ResultObject<T> PutOrder<T>(int orderId) where T: class;
+        public List<Order> GetPendingOrders();
+        public ResultObject<T> PutOrder<T>(int orderId) where T : class;
+        public ResultObject<T> PutOrderShipped<T>(int fulfillmentID, OrderShipped orderShip) where T : class;
     }
 }

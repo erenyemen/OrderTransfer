@@ -18,6 +18,8 @@ namespace OrderTransfer.Helpers.TPLCentral
         private readonly ITPLCentralSettings _settings;
         private TokenResult Token { get; set; }
 
+        public bool IsTokenExist { get { return Token == null ? false : true; } }
+
         public TPLCentralApiHelper(ILogger<TPLCentralApiHelper> logger, ITPLCentralSettings settings)
         {
             _logger = logger;
@@ -84,6 +86,22 @@ namespace OrderTransfer.Helpers.TPLCentral
             var response = CallApi<T, TPLCentralApiHelper>(url, request, _logger);
 
             return response;
+        }
+
+        public ResultObject<T> GetOrderByRefId<T>(string referanceNumber) where T : class
+        {
+            if (Token.IsExpired)
+                GetToken();
+
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("Authorization", $"Bearer {Token.access_token}");
+            request.AddHeader("Content-Type", "application/json");
+
+            var url = string.Format($"{_settings.BaseURL}{_settings.GetTrackingNum_URL}", referanceNumber);
+            var responseObject = CallApi<T, TPLCentralApiHelper>(url, request, _logger);
+            //result = responseObject.Result.value;
+
+            return responseObject;
         }
     }
 }

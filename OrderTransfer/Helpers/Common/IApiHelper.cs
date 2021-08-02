@@ -7,5 +7,7 @@ namespace OrderTransfer.Helpers.Common
         public TokenResult GetToken();
 
         public TokenResult GetRefreshToken();
+
+        public bool IsTokenExist { get; }
     }
 }

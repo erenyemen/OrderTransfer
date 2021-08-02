@@ -19,9 +19,11 @@ namespace OrderTransfer
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddConfigurations(configuration)
+                            .AddSeriLogOrderTransfer(configuration)
                             .AddChannelAdvisorApi()
                             .AddTplCentralApi()
-                            .AddHostedService<Worker>();
+                            .AddHostedService<OrderDeliveryWorker>();
+                            //.AddHostedService<OrderFulfillmentWorker>();
                 });
 
         private static IConfiguration GetConfiguration(string[] args)

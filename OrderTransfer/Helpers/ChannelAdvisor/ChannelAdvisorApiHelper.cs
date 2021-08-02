@@ -15,6 +15,8 @@ namespace OrderTransfer.Helpers.ChannelAdvisor
         private IChannelAdvisorSettings _settings { get; set; }
         private TokenResult Token { get; set; }
 
+        public bool IsTokenExist { get { return Token == null ? false : true; } }
+
         public ChannelAdvisorApiHelper(ILogger<ChannelAdvisorApiHelper> logger, IChannelAdvisorSettings settings)
         {
             _logger = logger;
@@ -95,7 +97,7 @@ namespace OrderTransfer.Helpers.ChannelAdvisor
             return result;
         }
 
-        public ResultObject<T> PutOrder<T>(int orderId) where T: class
+        public ResultObject<T> PutOrder<T>(int orderId) where T : class
         {
             if (Token.IsExpired)
                 GetToken();
@@ -113,6 +115,58 @@ namespace OrderTransfer.Helpers.ChannelAdvisor
             var response = CallApi<T, ChannelAdvisorApiHelper>(url, request, _logger);
 
             return response;
+        }
+
+        public ResultObject<T> PutOrderShipped<T>(int fulfillmentID, OrderShipped orderShip) where T : class
+        {
+            if (Token.IsExpired)
+                GetToken();
+
+            var request = new RestRequest(Method.POST);//PUT
+            request.AddHeader("Authorization", $"Bearer {Token.access_token}");
+            request.AddHeader("Content-Type", "application/json");
+
+            string tempResult = orderShip.Serialize();
+            request.AddParameter("application/json", orderShip.Serialize(), ParameterType.RequestBody);
+
+            var url = string.Format($"{_settings.BaseURL}{_settings.PutOrderShipped_URL}", fulfillmentID);
+
+            var response = CallApi<T, ChannelAdvisorApiHelper>(url, request, _logger);
+
+            return response;
+        }
+
+        public List<Order> GetPendingOrders()
+        {
+            if (Token.IsExpired)
+                GetToken();
+
+            List<Order> result;
+            var request = new RestRequest(Method.GET);
+            request.AddHeader("Authorization", $"Bearer {Token.access_token}");
+            request.AddHeader("Content-Type", "application/json");
+
+            var responseObject = CallApi<OrderResponse, ChannelAdvisorApiHelper>($"{_settings.BaseURL}{_settings.GetPendingOrder_URL}", request, _logger);
+            result = responseObject.Result.value;
+
+            // paging
+            if (!string.IsNullOrEmpty(responseObject.Result.OdataNextLink))
+            {
+                OrderResponse responseOdataNextLink;
+                var nextLink = responseObject.Result.OdataNextLink;
+                do
+                {
+                    responseOdataNextLink = CallApi<OrderResponse, ChannelAdvisorApiHelper>(nextLink, request, _logger).Result;
+                    result.AddRange(responseOdataNextLink.value);
+
+                    nextLink = responseOdataNextLink.OdataNextLink;
+
+                } while (!string.IsNullOrEmpty(responseOdataNextLink.OdataNextLink));
+            }
+
+            _logger.LogInformation($"Pending Orders Count: {result.Count}");
+
+            return result;
         }
     }
 }

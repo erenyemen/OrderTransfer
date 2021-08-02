@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace OrderTransfer.Models.Settings
+﻿namespace OrderTransfer.Models.Settings
 {
     public class ChannelAdvisorSettings : IChannelAdvisorSettings
     {
@@ -13,5 +9,7 @@ namespace OrderTransfer.Models.Settings
         public string GetFulfillments_URL { get; set; }
         public IdentitySettings IdentityInfo { get; set; }
         public string PutOrder_URL { get; set; }
+        public string PutOrderShipped_URL { get; set; }
+        public string GetPendingOrder_URL { get; set; }
     }
 }

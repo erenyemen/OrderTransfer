@@ -16,14 +16,15 @@ using System.Threading.Tasks;
 
 namespace OrderTransfer
 {
+    // https://complete.channeladvisor.com/Orders/AllOrders.mvc/List?apid=12036490&filter=ldxJsmY-b9NIVUT34CeUc7ocCIk
+    // https://developer.channeladvisor.com/working-with-orders/fulfillments/mark-an-existing-fulfillment-as-shipped
+    // https://developer.3plcentral.com/#intro
     /// <summary>
-    /// https://complete.channeladvisor.com/Orders/AllOrders.mvc/List?apid=12036490&filter=ldxJsmY-b9NIVUT34CeUc7ocCIk
-    /// https://developer.channeladvisor.com/working-with-orders/fulfillments/mark-an-existing-fulfillment-as-shipped
-    /// https://developer.3plcentral.com/#intro
+    /// Channel Advisor'dan 3PL Central'a Sipariþleri Gönderen Servis.
     /// </summary>
-    public class Worker : BackgroundService
+    public class OrderDeliveryWorker : BackgroundService
     {
-        private readonly ILogger<Worker> _logger;
+        private readonly ILogger<OrderDeliveryWorker> _logger;
         private readonly IConfiguration _config;
         private readonly IChannelAdvisorSettings _cadSetting;
         private readonly ITPLCentralSettings _tplSetting;
@@ -32,7 +33,7 @@ namespace OrderTransfer
         private readonly TokenResult advisorToken;
         private readonly TokenResult centralToken;
 
-        public Worker(ILogger<Worker> logger, IConfiguration config, IChannelAdvisorSettings cadSetting,
+        public OrderDeliveryWorker(ILogger<OrderDeliveryWorker> logger, IConfiguration config, IChannelAdvisorSettings cadSetting,
             ITPLCentralSettings tplSetting,
             IChannelAdvisorApiHelper apiAdvisor,
             ITPLCentralApiHelper apiCentral)
@@ -44,17 +45,22 @@ namespace OrderTransfer
             _apiAdvisor = apiAdvisor;
             _apiCentral = apiCentral;
 
-            advisorToken = _apiAdvisor.GetToken();
-            centralToken = _apiCentral.GetToken();
+            if (!_apiAdvisor.IsTokenExist)
+                advisorToken = _apiAdvisor.GetToken();
+
+            if (!_apiCentral.IsTokenExist)
+                centralToken = _apiCentral.GetToken();
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            _logger.LogInformation("Order Delivery Worker running at: {time}", DateTimeOffset.Now);
             while (!stoppingToken.IsCancellationRequested)
             {
-                List<Order> listAdvisorOrders = GetOrdersByChannelAdvisor();
+                // Channel Advisor'dan Order bilgilerini getirir.
+                List<Order> listAdvisorOrders = _apiAdvisor.GetOrders();
 
-                foreach (var item in listAdvisorOrders)// OrderByDescending(x => x.CreatedDateUtc)
+                foreach (var item in listAdvisorOrders.OrderByDescending(x => x.CreatedDateUtc))// OrderByDescending(x => x.CreatedDateUtc)
                 {
                     // 3PL Cental' a sipariþ (order) gönderiliyor.
                     var res = _apiCentral.PostOrders<PostOrderResponse>(CreateTplCentralObject(item));
@@ -66,34 +72,25 @@ namespace OrderTransfer
                         //OrderConfirm oc = new OrderConfirm()
                         //{
                         //    confirmDate = DateTime.Now,
-                        //    trackingNumber = item.Fulfillments[0].TrackingNumber,
+                        //    trackingNumber = "1212121312121",
                         //    recalcAutoCharges = false
                         //};
-                        // 3PL Central - Confirm Order 3PL Central
+                        //// 3PL Central - Confirm Order 3PL Central
                         //var resConfirm = _apiCentral.PostOrderConfirm<string>(oc, res.Result.ReadOnly.OrderId, res.Etag);
 
                         #endregion Comment
 
                         // Channel Advisor' da sipariþ, 'Bekleyen Sevkiyat (Pending Shipment)' durumuna çekiliyor.
                         var resPut = _apiAdvisor.PutOrder<string>(item.ID);
-
-                        //TODO: Gönderildiðine dair yapýlacak iþlemler
                     }
                 }
 
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-                await Task.Delay(1000 * 60 * _config.GetValue<int>("WorkingTime"), stoppingToken);
+                _logger.LogInformation("Order Delivery Worker running at: {time}", DateTimeOffset.Now);
+                await Task.Delay(1000 * 60 * _config.GetValue<int>("WorkingTime_OrderDeliveryWorker"), stoppingToken);
             }
         }
 
-        /// <summary>
-        /// Channel Advisor'dan Order bilgilerini getirir.
-        /// </summary>
-        /// <returns></returns>
-        private List<Order> GetOrdersByChannelAdvisor()
-        {
-            return _apiAdvisor.GetOrders();
-        }
+        #region Mapper Methods
 
         private Root CreateTplCentralObject(Order item)
         {
@@ -102,11 +99,11 @@ namespace OrderTransfer
                 customerIdentifier = new CustomerIdentifier() { Id = 1 },
                 facilityIdentifier = new FacilityIdentifier() { Id = 1, Name = "DropRight" },
                 orderItems = OrderItemsMapper(item.Items),
-                referenceNum = item.SiteOrderID,
+                referenceNum = item.SiteOrderID.Replace("#",""),
                 notes = item.PublicNotes,
                 shippingNotes = item.PrivateNotes,
                 billingCode = "Sender",//TODO: Bilgi Yok.
-                //routingInfo = RoutingInfoMapper(item.Fulfillments.FirstOrDefault()),
+                routingInfo = RoutingInfoMapper(item.Fulfillments.FirstOrDefault()),
                 shipTo = new ShipTo()
                 {
                     address1 = item.ShippingAddressLine1,
@@ -115,7 +112,7 @@ namespace OrderTransfer
                     companyName = string.IsNullOrEmpty(item.ShippingCompanyName) ? $"{item.ShippingFirstName.ToStringByTrim()} {item.ShippingLastName.ToStringByTrim()}" : item.ShippingCompanyName,
                     country = item.ShippingCountry,
                     name = $"{item.ShippingFirstName.ToStringByTrim()} {item.ShippingLastName.ToStringByTrim()}",
-                    state = item.ShippingStateOrProvinceName,
+                    state = item.ShippingStateOrProvince,
                     zip = item.ShippingPostalCode,
                     phoneNumber = item.ShippingDaytimePhone,
                     emailAddress = item.BuyerEmailAddress
@@ -166,13 +163,9 @@ namespace OrderTransfer
         private RoutingInfo RoutingInfoMapper(Fulfillment item)
         {
             if (item is null) return null;
-
-            return new RoutingInfo()
-            {
-                //TODO: Bakýlacak tekrar
-                carrier = item.ShippingCarrier,
-                mode = ""
-            };
+            return new RoutingInfo() { carrier = item.ShippingCarrier, mode = item.ShippingClass };
         }
+
+        #endregion Mapper Methods
     }
 }

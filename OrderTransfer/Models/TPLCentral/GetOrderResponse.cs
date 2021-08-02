@@ -4,19 +4,11 @@ using System.Text;
 
 namespace OrderTransfer.Models.TPLCentral
 {
-    public class CreatedByIdentifier
+    class GetOrderResponse
     {
-        public string Name { get; set; }
-        public int Id { get; set; }
     }
 
-    public class LastModifiedByIdentifier
-    {
-        public string Name { get; set; }
-        public int Id { get; set; }
-    }
-
-    public class ReadOnly
+    public class GetResponse_ReadOnly
     {
         public int OrderId { get; set; }
         public int AsnCandidate { get; set; }
@@ -47,15 +39,11 @@ namespace OrderTransfer.Models.TPLCentral
         public string RowVersion { get; set; }
     }
 
-    public class UnitIdentifier
-    {
-        public string Name { get; set; }
-        public int Id { get; set; }
-    }
+  
 
-    public class Post_OrderItem
+    public class GetResponse_OrderItem
     {
-        public ReadOnly ReadOnly { get; set; }
+        public GetResponse_ReadOnly ReadOnly { get; set; }
         public ItemIdentifier ItemIdentifier { get; set; }
         public string Qualifier { get; set; }
         public double Qty { get; set; }
@@ -63,65 +51,11 @@ namespace OrderTransfer.Models.TPLCentral
         public List<object> _links { get; set; }
     }
 
-    public class Post_RoutingInfo
+    public class ResourceList
     {
-        public bool IsCod { get; set; }
-        public bool IsInsurance { get; set; }
-        public bool RequiresDeliveryConf { get; set; }
-        public bool RequiresReturnReceipt { get; set; }
-        public string Carrier { get; set; }
-        public string Mode { get; set; }
-        public string TrackingNumber { get; set; }
-    }
-
-    public class Billing
-    {
-    }
-
-    public class FulfillInvInfo
-    {
-    }
-
-    public class Post_ShipTo
-    {
-        public bool IsQuickLookup { get; set; }
-        public int ContactId { get; set; }
-        public string Name { get; set; }
-        public string Address1 { get; set; }
-        public string City { get; set; }
-        public string State { get; set; }
-        public string Zip { get; set; }
-        public string Country { get; set; }
-        public int AddressStatus { get; set; }
-    }
-
-    public class ParcelOption
-    {
-        public int OrderId { get; set; }
-        public string DeliveryConfirmationType { get; set; }
-        public int DeliveredDutyPaid { get; set; }
-        public double DryIceWeight { get; set; }
-        public double InsuranceAmount { get; set; }
-        public int InsuranceType { get; set; }
-        public string InternationalContentsType { get; set; }
-        public string InternationalNonDelivery { get; set; }
-        public bool ResidentialFlag { get; set; }
-        public bool SaturdayDeliveryFlag { get; set; }
-    }
-
-    public class Link
-    {
-        public string Rel { get; set; }
-        public string Href { get; set; }
-        public bool IsTemplated { get; set; }
-    }
-
-    public class PostOrderResponse
-    {
-        public ReadOnly ReadOnly { get; set; }
-        public List<Post_OrderItem> OrderItems { get; set; }
+        public GetResponse_ReadOnly ReadOnly { get; set; }
+        public List<GetResponse_OrderItem> OrderItems { get; set; }
         public string ReferenceNum { get; set; }
-        public string Notes { get; set; }
         public double NumUnits1 { get; set; }
         public double TotalWeight { get; set; }
         public double TotalVolume { get; set; }
@@ -132,9 +66,18 @@ namespace OrderTransfer.Models.TPLCentral
         public FulfillInvInfo FulfillInvInfo { get; set; }
         public Post_RoutingInfo RoutingInfo { get; set; }
         public Billing Billing { get; set; }
-        public Post_ShipTo ShipTo { get; set; }
+        public ShipTo ShipTo { get; set; }
         public List<object> SavedElements { get; set; }
         public ParcelOption ParcelOption { get; set; }
-        public List<Link> _links { get; set; }
+        public List<object> _links { get; set; }
     }
+
+    public class GetResponseObject
+    {
+        public int TotalResults { get; set; }
+        public List<ResourceList> ResourceList { get; set; }
+        public List<object> _links { get; set; }
+    }
+
+
 }
