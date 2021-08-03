@@ -10,7 +10,6 @@ using OrderTransfer.Models.TPLCentral;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -57,36 +56,43 @@ namespace OrderTransfer
 
                 foreach (var item in resultOrders)
                 {
-                    //TODO: Get tracking numbers from 3pl for order.
-                    var res = _apiCentral.GetOrderByRefId<GetResponseObject>(item.SiteOrderID.Replace("#",""));
-
-                    if (res.IsSuccessful && res.Result.TotalResults != 0)
+                    try
                     {
+                        //TODO: Get tracking numbers from 3pl for order.
+                        var res = _apiCentral.GetOrderByRefId<GetResponseObject>(item.SiteOrderID.Replace("#", ""));
+
+                        if (!res.IsSuccessful) continue;
+                        if (res.Result.TotalResults == 0) continue;
+
                         var TrackingNumber = res.Result.ResourceList[0].RoutingInfo.TrackingNumber;
 
-                        if (TrackingNumber != null)
+                        if (string.IsNullOrEmpty(TrackingNumber)) continue;
+
+                        OrderShipped os = new OrderShipped()
                         {
-                            OrderShipped os = new OrderShipped()
+                            Value = new Value()
                             {
-                                Value = new Value()
-                                {
-                                    TrackingNumber = TrackingNumber,
-                                    DistributionCenterID = item.Fulfillments[0].DistributionCenterID,
-                                    DeliveryStatus = "Complete"
-                                }
-                            };
+                                TrackingNumber = TrackingNumber,
+                                DistributionCenterID = item.Fulfillments[0].DistributionCenterID,
+                                DeliveryStatus = "Complete",
+                                ShippingCarrier = res.Result.ResourceList[0].RoutingInfo.Carrier
+                            }
+                        };
 
-                            var resShipped =_apiAdvisor.PutOrderShipped<string>(item.ID, os);
+                        var resShipped = _apiAdvisor.PutOrderShipped<string>(item.ID, os);
 
-                            if (resShipped.response.IsSuccessful)
-                                _logger.LogInformation($"Tracking number send to Channel Advisor - {TrackingNumber}");
-                        }
+                        if (resShipped.response.IsSuccessful)
+                            _logger.LogInformation($"Tracking number send to Channel Advisor - {TrackingNumber}");
+                    }
+                    catch (Exception exp)
+                    {
+                        _logger.LogError(exp.Message);
                     }
                 }
             }
 
             _logger.LogInformation("Order Fulfillment Worker running at: {time}", DateTimeOffset.Now);
-            await Task.Delay(1000 * 60 * _config.GetValue<int>("WorkingTime_OrderSenderWorker"), stoppingToken);
+            await Task.Delay(1000 * 60 * _config.GetValue<int>("WorkingTime_FulfillmentWorker"), stoppingToken);
         }
     }
 }

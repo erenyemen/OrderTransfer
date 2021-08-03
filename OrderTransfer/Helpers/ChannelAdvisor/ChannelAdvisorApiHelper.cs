@@ -14,7 +14,6 @@ namespace OrderTransfer.Helpers.ChannelAdvisor
         private readonly ILogger<ChannelAdvisorApiHelper> _logger;
         private IChannelAdvisorSettings _settings { get; set; }
         private TokenResult Token { get; set; }
-
         public bool IsTokenExist { get { return Token == null ? false : true; } }
 
         public ChannelAdvisorApiHelper(ILogger<ChannelAdvisorApiHelper> logger, IChannelAdvisorSettings settings)
@@ -25,6 +24,9 @@ namespace OrderTransfer.Helpers.ChannelAdvisor
 
         public TokenResult GetToken()
         {
+            if (IsTokenExist && !Token.IsExpired)
+                return Token;
+
             var request = new RestRequest(Method.POST);
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
             request.AddParameter("client_id", _settings.IdentityInfo.Client_Id);

@@ -66,19 +66,6 @@ namespace OrderTransfer
 
                     if (res.IsSuccessful)
                     {
-                        #region Comment
-
-                        //OrderConfirm oc = new OrderConfirm()
-                        //{
-                        //    confirmDate = DateTime.Now,
-                        //    trackingNumber = "1212121312121",
-                        //    recalcAutoCharges = false
-                        //};
-                        //// 3PL Central - Confirm Order 3PL Central
-                        //var resConfirm = _apiCentral.PostOrderConfirm<string>(oc, res.Result.ReadOnly.OrderId, res.Etag);
-
-                        #endregion Comment
-
                         // Channel Advisor' da sipariþ, 'Bekleyen Sevkiyat (Pending Shipment)' durumuna çekiliyor.
                         var resPut = _apiAdvisor.PutOrder<string>(item.ID);
                     }
@@ -166,5 +153,18 @@ namespace OrderTransfer
         }
 
         #endregion Mapper Methods
+
+        #region Comment
+
+        //OrderConfirm oc = new OrderConfirm()
+        //{
+        //    confirmDate = DateTime.Now,
+        //    trackingNumber = "1212121312121",
+        //    recalcAutoCharges = false
+        //};
+        //// 3PL Central - Confirm Order 3PL Central
+        //var resConfirm = _apiCentral.PostOrderConfirm<string>(oc, res.Result.ReadOnly.OrderId, res.Etag);
+
+        #endregion Comment
     }
 }

@@ -17,7 +17,6 @@ namespace OrderTransfer.Helpers.TPLCentral
         private readonly ILogger<TPLCentralApiHelper> _logger;
         private readonly ITPLCentralSettings _settings;
         private TokenResult Token { get; set; }
-
         public bool IsTokenExist { get { return Token == null ? false : true; } }
 
         public TPLCentralApiHelper(ILogger<TPLCentralApiHelper> logger, ITPLCentralSettings settings)
@@ -33,6 +32,9 @@ namespace OrderTransfer.Helpers.TPLCentral
 
         public TokenResult GetToken()
         {
+            if (IsTokenExist && !Token.IsExpired)
+                return Token;
+
             TokenResult result;
 
             var request = new RestRequest(Method.POST);
@@ -99,7 +101,6 @@ namespace OrderTransfer.Helpers.TPLCentral
 
             var url = string.Format($"{_settings.BaseURL}{_settings.GetTrackingNum_URL}", referanceNumber);
             var responseObject = CallApi<T, TPLCentralApiHelper>(url, request, _logger);
-            //result = responseObject.Result.value;
 
             return responseObject;
         }
