@@ -86,13 +86,14 @@ namespace OrderTransfer
                     }
                     catch (Exception exp)
                     {
-                        _logger.LogError(exp.Message);
+                        if (!string.IsNullOrEmpty(exp.Message))
+                            _logger.LogError(exp.Message);
                     }
                 }
-            }
 
-            _logger.LogInformation("Order Fulfillment Worker running at: {time}", DateTimeOffset.Now);
-            await Task.Delay(1000 * 60 * _config.GetValue<int>("WorkingTime_FulfillmentWorker"), stoppingToken);
+                _logger.LogInformation("Order Fulfillment Worker running at: {time}", DateTimeOffset.Now);
+                await Task.Delay(1000 * 60 * _config.GetValue<int>("WorkingTime_FulfillmentWorker"), stoppingToken);
+            }
         }
     }
 }
