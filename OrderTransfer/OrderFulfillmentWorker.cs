@@ -52,42 +52,54 @@ namespace OrderTransfer
             while (!stoppingToken.IsCancellationRequested)
             {
                 // Get Pending Shippment Orders from Channel Advisor.
-                List<Order> resultOrders = _apiAdvisor.GetPendingOrders().OrderByDescending(x => x.CreatedDateUtc).ToList();
+                List<Order> resultOrders = _apiAdvisor.GetPendingOrders(); //.OrderByDescending(x => x.CreatedDateUtc).ToList();
 
-                foreach (var item in resultOrders)
+                if (resultOrders.Count > 0)
                 {
-                    try
+                    foreach (var item in resultOrders.OrderByDescending(x => x.CreatedDateUtc))
                     {
-                        //TODO: Get tracking numbers from 3pl for order.
-                        var res = _apiCentral.GetOrderByRefId<GetResponseObject>(item.SiteOrderID.Replace("#", ""));
-
-                        if (!res.IsSuccessful) continue;
-                        if (res.Result.TotalResults == 0) continue;
-
-                        var TrackingNumber = res.Result.ResourceList[0].RoutingInfo.TrackingNumber;
-
-                        if (string.IsNullOrEmpty(TrackingNumber)) continue;
-
-                        OrderShipped os = new OrderShipped()
+                        try
                         {
-                            Value = new Value()
+                            //TODO: Get tracking numbers from 3pl for order.
+                            var res = _apiCentral.GetOrderByRefId<GetResponseObject>(item.SiteOrderID.Replace("#", ""));
+
+                            if (res.Result is null) continue;
+                            if (!res.IsSuccessful) continue;
+                            if (res.Result.TotalResults == 0)
                             {
-                                TrackingNumber = TrackingNumber,
-                                DistributionCenterID = item.Fulfillments[0].DistributionCenterID,
-                                DeliveryStatus = "Complete",
-                                ShippingCarrier = res.Result.ResourceList[0].RoutingInfo.Carrier
+                                _logger.LogWarning($"No results were returned for order {item.SiteOrderID} from 3pl central");
+                                continue;
                             }
-                        };
 
-                        var resShipped = _apiAdvisor.PutOrderShipped<string>(item.ID, os);
+                            var TrackingNumber = res.Result.ResourceList[0].RoutingInfo.TrackingNumber;
 
-                        if (resShipped.response.IsSuccessful)
-                            _logger.LogInformation($"Tracking number send to Channel Advisor - {TrackingNumber}");
-                    }
-                    catch (Exception exp)
-                    {
-                        if (!string.IsNullOrEmpty(exp.Message))
-                            _logger.LogError(exp.Message);
+                            if (string.IsNullOrEmpty(TrackingNumber))
+                            {
+                                _logger.LogWarning($"The tracking number of the order number {res.Result.ResourceList[0].ReferenceNum} is null");
+                                continue;
+                            }
+
+                            OrderShipped os = new OrderShipped()
+                            {
+                                Value = new Value()
+                                {
+                                    TrackingNumber = TrackingNumber,
+                                    DistributionCenterID = item.Fulfillments[0].DistributionCenterID,
+                                    DeliveryStatus = "Complete",
+                                    ShippingCarrier = res.Result.ResourceList[0].RoutingInfo.Carrier
+                                }
+                            };
+
+                            var resShipped = _apiAdvisor.PutOrderShipped<string>(item.ID, os);
+
+                            if (resShipped.response.IsSuccessful)
+                                _logger.LogInformation($"Tracking number send to Channel Advisor - {TrackingNumber}");
+                        }
+                        catch (Exception exp)
+                        {
+                            if (!string.IsNullOrEmpty(exp.Message))
+                                _logger.LogError(exp.Message);
+                        }
                     }
                 }
 

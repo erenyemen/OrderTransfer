@@ -11,7 +11,7 @@ namespace OrderTransfer.Models.ChannelAdvisor
         public string SiteName { get; set; }
         public int UserDataPresent { get; set; }
         public object UserDataRemovalDateUTC { get; set; }
-        public int SiteAccountID { get; set; }
+        public int? SiteAccountID { get; set; }
         public string SiteOrderID { get; set; }
         public string SecondarySiteOrderID { get; set; }
         public string SellerOrderID { get; set; }

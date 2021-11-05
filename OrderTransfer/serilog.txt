@@ -33,3 +33,276 @@
 2021-08-04 13:23:13.189 +03:00 [INF] Application started. Press Ctrl+C to shut down.
 2021-08-04 13:23:13.190 +03:00 [INF] Hosting environment: Development
 2021-08-04 13:23:13.191 +03:00 [INF] Content root path: D:\Users\ey000087\source\repos\OrderTransfer\OrderTransfer
+2021-09-13 11:11:36.109 +03:00 [INF] GetToken: WF3lJJIc1CTaP3veq97i9x-zHhNPwRcaUpGzB-s67N4-44047
+2021-09-13 11:11:36.700 +03:00 [INF] GetToken: eyJ0eXAiOiJqd3QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOiIxNjMxNTA2Mjk3IiwiaXNzIjoiaHR0cDovL3NlY3VyZS13bXMuY29tL0F1dGhTZXJ2ZXIiLCJhdWQiOiJodHRwOi8vIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ3VzdG9tZXJWaWV3IEZhY2lsaXR5VmlldyBJbnZlbnRvcnlEZXRhaWxWaWV3IEl0ZW1WaWV3IE9yZGVyRWRpdCBPcmRlclZpZXcgT3JkZXJXcml0ZSBSZWFkUHJvcGVydGllc1RoaXJkUGFydHkgUmVjZWl2ZXJWaWV3IiwiaHR0cDovL3d3dy4zcGxDZW50cmFsLmNvbS9BdXRoU2VydmVyL2NsYWltcy91c2VyaW5mbyI6ImV5SkRiR2xsYm5SSlpDSTZOakF4T0N3aVEyeHBaVzUwUTNWemRHOXRaWEpKWkNJNk1Td2lRMnhwWlc1MElqb2lVSEp2ZG1semFXOXVaV1FnWW5rZ1NHVnBaR2tnWm05eUlFdE9RUzFTUlZOVUlHOXVJREExTHpJd0x6SXdNakVnS0hWemFXNW5JRVJCVWxRcExpSXNJbFJvY21WbFVHeEhkV2xrSWpvaVpqSTVZV1E0TmpVdFpXUmxaaTAwWVRka0xUZ3pZV1V0WVROak5XVTNOalV6TWpWbElpd2lWR2h5WldWUWJFbGtJam96TVRFNUxDSlZjMlZ5VEc5bmFXNUpaQ0k2Tnl3aVZYTmxja3h2WjJsdUlqb2lTMlZpWVNKOSJ9.penpLt-ZstJnVeIvpopBJUxEXlfNQlDxgOw50RqALCM
+2021-09-13 11:11:37.964 +03:00 [ERR] The JSON value could not be converted to System.Int32. Path: $.value[1].SiteAccountID | LineNumber: 0 | BytePositionInLine: 4071.
+System.Text.Json.JsonException: The JSON value could not be converted to System.Int32. Path: $.value[1].SiteAccountID | LineNumber: 0 | BytePositionInLine: 4071.
+ ---> System.InvalidOperationException: Cannot get the value of a token type 'Null' as a number.
+   at System.Text.Json.Utf8JsonReader.TryGetInt32(Int32& value)
+   at System.Text.Json.Utf8JsonReader.GetInt32()
+   at System.Text.Json.Serialization.Converters.Int32Converter.Read(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options)
+   at System.Text.Json.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, JsonSerializerOptions options, ReadStack& state)
+   --- End of inner exception stack trace ---
+   at System.Text.Json.ThrowHelper.ReThrowWithPath(ReadStack& state, Utf8JsonReader& reader, Exception ex)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.JsonSerializer.ReadCore[TValue](JsonConverter jsonConverter, Utf8JsonReader& reader, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.JsonSerializer.ReadCore[TValue](Utf8JsonReader& reader, Type returnType, JsonSerializerOptions options)
+   at System.Text.Json.JsonSerializer.Deserialize[TValue](String json, Type returnType, JsonSerializerOptions options)
+   at System.Text.Json.JsonSerializer.Deserialize[TValue](String json, JsonSerializerOptions options)
+   at OrderTransfer.Helpers.Serializer.JsonHelper.Deserialize[T,logObject](String jsonString, ILogger`1 logger) in D:\Users\ey000087\source\repos\OrderTransfer\OrderTransfer\Helpers\Serializer\JsonHelper.cs:line 20
+2021-09-13 11:12:10.812 +03:00 [INF] GetToken: NuHpiLfrOF05_FZSqb5me8oZppDdOHZvKHHqq43YmGI-44047
+2021-09-13 11:12:11.399 +03:00 [INF] GetToken: eyJ0eXAiOiJqd3QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOiIxNjMxNTA2MzMxIiwiaXNzIjoiaHR0cDovL3NlY3VyZS13bXMuY29tL0F1dGhTZXJ2ZXIiLCJhdWQiOiJodHRwOi8vIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ3VzdG9tZXJWaWV3IEZhY2lsaXR5VmlldyBJbnZlbnRvcnlEZXRhaWxWaWV3IEl0ZW1WaWV3IE9yZGVyRWRpdCBPcmRlclZpZXcgT3JkZXJXcml0ZSBSZWFkUHJvcGVydGllc1RoaXJkUGFydHkgUmVjZWl2ZXJWaWV3IiwiaHR0cDovL3d3dy4zcGxDZW50cmFsLmNvbS9BdXRoU2VydmVyL2NsYWltcy91c2VyaW5mbyI6ImV5SkRiR2xsYm5SSlpDSTZOakF4T0N3aVEyeHBaVzUwUTNWemRHOXRaWEpKWkNJNk1Td2lRMnhwWlc1MElqb2lVSEp2ZG1semFXOXVaV1FnWW5rZ1NHVnBaR2tnWm05eUlFdE9RUzFTUlZOVUlHOXVJREExTHpJd0x6SXdNakVnS0hWemFXNW5JRVJCVWxRcExpSXNJbFJvY21WbFVHeEhkV2xrSWpvaVpqSTVZV1E0TmpVdFpXUmxaaTAwWVRka0xUZ3pZV1V0WVROak5XVTNOalV6TWpWbElpd2lWR2h5WldWUWJFbGtJam96TVRFNUxDSlZjMlZ5VEc5bmFXNUpaQ0k2Tnl3aVZYTmxja3h2WjJsdUlqb2lTMlZpWVNKOSJ9.Mx00A8X3yrRoI6PAtDjpFft73RfSIqvaKKiJ3GL8gf4
+2021-09-13 11:12:23.722 +03:00 [ERR] The JSON value could not be converted to System.Int32. Path: $.value[1].SiteAccountID | LineNumber: 0 | BytePositionInLine: 4071.
+System.Text.Json.JsonException: The JSON value could not be converted to System.Int32. Path: $.value[1].SiteAccountID | LineNumber: 0 | BytePositionInLine: 4071.
+ ---> System.InvalidOperationException: Cannot get the value of a token type 'Null' as a number.
+   at System.Text.Json.Utf8JsonReader.TryGetInt32(Int32& value)
+   at System.Text.Json.Utf8JsonReader.GetInt32()
+   at System.Text.Json.Serialization.Converters.Int32Converter.Read(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options)
+   at System.Text.Json.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.Converters.IEnumerableDefaultConverter`2.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, TCollection& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.JsonPropertyInfo`1.ReadJsonAndSetMember(Object obj, ReadStack& state, Utf8JsonReader& reader)
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, JsonSerializerOptions options, ReadStack& state)
+   --- End of inner exception stack trace ---
+   at System.Text.Json.ThrowHelper.ReThrowWithPath(ReadStack& state, Utf8JsonReader& reader, Exception ex)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.JsonSerializer.ReadCore[TValue](JsonConverter jsonConverter, Utf8JsonReader& reader, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.JsonSerializer.ReadCore[TValue](Utf8JsonReader& reader, Type returnType, JsonSerializerOptions options)
+   at System.Text.Json.JsonSerializer.Deserialize[TValue](String json, Type returnType, JsonSerializerOptions options)
+   at System.Text.Json.JsonSerializer.Deserialize[TValue](String json, JsonSerializerOptions options)
+   at OrderTransfer.Helpers.Serializer.JsonHelper.Deserialize[T,logObject](String jsonString, ILogger`1 logger) in D:\Users\ey000087\source\repos\OrderTransfer\OrderTransfer\Helpers\Serializer\JsonHelper.cs:line 20
+2021-09-13 11:17:29.422 +03:00 [INF] GetToken: H6aTSuT77jomnqu0-B-_cPUg7tCZ7-oeMoX-DUzGfRc-44047
+2021-09-13 11:17:30.237 +03:00 [INF] GetToken: eyJ0eXAiOiJqd3QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOiIxNjMxNTA2NjUwIiwiaXNzIjoiaHR0cDovL3NlY3VyZS13bXMuY29tL0F1dGhTZXJ2ZXIiLCJhdWQiOiJodHRwOi8vIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ3VzdG9tZXJWaWV3IEZhY2lsaXR5VmlldyBJbnZlbnRvcnlEZXRhaWxWaWV3IEl0ZW1WaWV3IE9yZGVyRWRpdCBPcmRlclZpZXcgT3JkZXJXcml0ZSBSZWFkUHJvcGVydGllc1RoaXJkUGFydHkgUmVjZWl2ZXJWaWV3IiwiaHR0cDovL3d3dy4zcGxDZW50cmFsLmNvbS9BdXRoU2VydmVyL2NsYWltcy91c2VyaW5mbyI6ImV5SkRiR2xsYm5SSlpDSTZOakF4T0N3aVEyeHBaVzUwUTNWemRHOXRaWEpKWkNJNk1Td2lRMnhwWlc1MElqb2lVSEp2ZG1semFXOXVaV1FnWW5rZ1NHVnBaR2tnWm05eUlFdE9RUzFTUlZOVUlHOXVJREExTHpJd0x6SXdNakVnS0hWemFXNW5JRVJCVWxRcExpSXNJbFJvY21WbFVHeEhkV2xrSWpvaVpqSTVZV1E0TmpVdFpXUmxaaTAwWVRka0xUZ3pZV1V0WVROak5XVTNOalV6TWpWbElpd2lWR2h5WldWUWJFbGtJam96TVRFNUxDSlZjMlZ5VEc5bmFXNUpaQ0k2Tnl3aVZYTmxja3h2WjJsdUlqb2lTMlZpWVNKOSJ9.dc6rwtIkikrbYcQhtDozbdzkumxhunak1GDsjgX1cNc
+2021-09-13 11:18:05.210 +03:00 [INF] Orders Count: 9
+2021-09-13 11:19:18.591 +03:00 [ERR] The input does not contain any JSON tokens. Expected the input to start with a valid JSON token, when isFinalBlock is true. Path: $ | LineNumber: 0 | BytePositionInLine: 0.
+System.Text.Json.JsonException: The input does not contain any JSON tokens. Expected the input to start with a valid JSON token, when isFinalBlock is true. Path: $ | LineNumber: 0 | BytePositionInLine: 0.
+ ---> System.Text.Json.JsonReaderException: The input does not contain any JSON tokens. Expected the input to start with a valid JSON token, when isFinalBlock is true. LineNumber: 0 | BytePositionInLine: 0.
+   at System.Text.Json.ThrowHelper.ThrowJsonReaderException(Utf8JsonReader& json, ExceptionResource resource, Byte nextByte, ReadOnlySpan`1 bytes)
+   at System.Text.Json.Utf8JsonReader.Read()
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, JsonSerializerOptions options, ReadStack& state)
+   --- End of inner exception stack trace ---
+   at System.Text.Json.ThrowHelper.ReThrowWithPath(ReadStack& state, JsonReaderException ex)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.JsonSerializer.ReadCore[TValue](JsonConverter jsonConverter, Utf8JsonReader& reader, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.JsonSerializer.ReadCore[TValue](Utf8JsonReader& reader, Type returnType, JsonSerializerOptions options)
+   at System.Text.Json.JsonSerializer.Deserialize[TValue](String json, Type returnType, JsonSerializerOptions options)
+   at System.Text.Json.JsonSerializer.Deserialize[TValue](String json, JsonSerializerOptions options)
+   at OrderTransfer.Helpers.Serializer.JsonHelper.Deserialize[T,logObject](String jsonString, ILogger`1 logger) in D:\Users\ey000087\source\repos\OrderTransfer\OrderTransfer\Helpers\Serializer\JsonHelper.cs:line 20
+2021-09-16 19:39:40.260 +03:00 [INF] GetToken: hWVS6OLHZJ1vFq24T6d42MogaJZEzB5KH5qJNkOE4s8-44047
+2021-09-16 19:39:52.637 +03:00 [INF] GetToken: eyJ0eXAiOiJqd3QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOiIxNjMxNzk1OTk1IiwiaXNzIjoiaHR0cDovL3NlY3VyZS13bXMuY29tL0F1dGhTZXJ2ZXIiLCJhdWQiOiJodHRwOi8vIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ3VzdG9tZXJWaWV3IEZhY2lsaXR5VmlldyBJbnZlbnRvcnlEZXRhaWxWaWV3IEl0ZW1WaWV3IE9yZGVyRWRpdCBPcmRlclZpZXcgT3JkZXJXcml0ZSBSZWFkUHJvcGVydGllc1RoaXJkUGFydHkgUmVjZWl2ZXJWaWV3IiwiaHR0cDovL3d3dy4zcGxDZW50cmFsLmNvbS9BdXRoU2VydmVyL2NsYWltcy91c2VyaW5mbyI6ImV5SkRiR2xsYm5SSlpDSTZOakF4T0N3aVEyeHBaVzUwUTNWemRHOXRaWEpKWkNJNk1Td2lRMnhwWlc1MElqb2lVSEp2ZG1semFXOXVaV1FnWW5rZ1NHVnBaR2tnWm05eUlFdE9RUzFTUlZOVUlHOXVJREExTHpJd0x6SXdNakVnS0hWemFXNW5JRVJCVWxRcExpSXNJbFJvY21WbFVHeEhkV2xrSWpvaVpqSTVZV1E0TmpVdFpXUmxaaTAwWVRka0xUZ3pZV1V0WVROak5XVTNOalV6TWpWbElpd2lWR2h5WldWUWJFbGtJam96TVRFNUxDSlZjMlZ5VEc5bmFXNUpaQ0k2Tnl3aVZYTmxja3h2WjJsdUlqb2lTMlZpWVNKOSJ9.u18izhoHymoGeGaJ2Ip6oEPvQMSLGIsCggDxfHc1nBg
+2021-09-16 19:40:13.124 +03:00 [INF] Orders Count: 1
+2021-09-16 19:40:47.865 +03:00 [ERR] BadRequest, Error Detail: {"$type":"WMS.V2.Generic.Models.Exceptions.ModelValidationException, WMS.V2.Generic.Models","ModelType":"Orm","Properties":[{"$type":"WMS.V2.Generic.Models.Exceptions.ModelProperty, WMS.V2.Generic.Models","Name":"WarehouseTransaction.ReferenceNum","Value":"13-07607-81285"}],"ErrorCode":"Duplicate","Hint":"Reference Number is already in use. Must be unique for customer and transaction type.","ClassName":"ModelValidationException"}
+2021-09-16 19:41:13.475 +03:00 [INF] Order Delivery Worker running at: "2021-09-16T19:41:13.4705224+03:00"
+2021-09-16 19:41:40.617 +03:00 [INF] Orders Count: 1
+2021-09-16 19:41:45.705 +03:00 [ERR] BadRequest, Error Detail: {"$type":"WMS.V2.Generic.Models.Exceptions.ModelValidationException, WMS.V2.Generic.Models","ModelType":"Orm","Properties":[{"$type":"WMS.V2.Generic.Models.Exceptions.ModelProperty, WMS.V2.Generic.Models","Name":"WarehouseTransaction.ReferenceNum","Value":"13-07607-81285"}],"ErrorCode":"Duplicate","Hint":"Reference Number is already in use. Must be unique for customer and transaction type.","ClassName":"ModelValidationException"}
+2021-09-16 19:43:20.110 +03:00 [ERR] The input does not contain any JSON tokens. Expected the input to start with a valid JSON token, when isFinalBlock is true. Path: $ | LineNumber: 0 | BytePositionInLine: 0.
+System.Text.Json.JsonException: The input does not contain any JSON tokens. Expected the input to start with a valid JSON token, when isFinalBlock is true. Path: $ | LineNumber: 0 | BytePositionInLine: 0.
+ ---> System.Text.Json.JsonReaderException: The input does not contain any JSON tokens. Expected the input to start with a valid JSON token, when isFinalBlock is true. LineNumber: 0 | BytePositionInLine: 0.
+   at System.Text.Json.ThrowHelper.ThrowJsonReaderException(Utf8JsonReader& json, ExceptionResource resource, Byte nextByte, ReadOnlySpan`1 bytes)
+   at System.Text.Json.Utf8JsonReader.Read()
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, JsonSerializerOptions options, ReadStack& state)
+   --- End of inner exception stack trace ---
+   at System.Text.Json.ThrowHelper.ReThrowWithPath(ReadStack& state, JsonReaderException ex)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.JsonSerializer.ReadCore[TValue](JsonConverter jsonConverter, Utf8JsonReader& reader, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.JsonSerializer.ReadCore[TValue](Utf8JsonReader& reader, Type returnType, JsonSerializerOptions options)
+   at System.Text.Json.JsonSerializer.Deserialize[TValue](String json, Type returnType, JsonSerializerOptions options)
+   at System.Text.Json.JsonSerializer.Deserialize[TValue](String json, JsonSerializerOptions options)
+   at OrderTransfer.Helpers.Serializer.JsonHelper.Deserialize[T,logObject](String jsonString, ILogger`1 logger) in D:\Users\ey000087\source\repos\OrderTransfer\OrderTransfer\Helpers\Serializer\JsonHelper.cs:line 20
+2021-09-16 19:51:10.786 +03:00 [INF] GetToken: n1Vn2i0P1oO3W0lApLRHwNqiGLvNiB5mLcQ9fDx0xTw-44047
+2021-09-16 19:51:11.486 +03:00 [INF] GetToken: eyJ0eXAiOiJqd3QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOiIxNjMxNzk2Njc0IiwiaXNzIjoiaHR0cDovL3NlY3VyZS13bXMuY29tL0F1dGhTZXJ2ZXIiLCJhdWQiOiJodHRwOi8vIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ3VzdG9tZXJWaWV3IEZhY2lsaXR5VmlldyBJbnZlbnRvcnlEZXRhaWxWaWV3IEl0ZW1WaWV3IE9yZGVyRWRpdCBPcmRlclZpZXcgT3JkZXJXcml0ZSBSZWFkUHJvcGVydGllc1RoaXJkUGFydHkgUmVjZWl2ZXJWaWV3IiwiaHR0cDovL3d3dy4zcGxDZW50cmFsLmNvbS9BdXRoU2VydmVyL2NsYWltcy91c2VyaW5mbyI6ImV5SkRiR2xsYm5SSlpDSTZOakF4T0N3aVEyeHBaVzUwUTNWemRHOXRaWEpKWkNJNk1Td2lRMnhwWlc1MElqb2lVSEp2ZG1semFXOXVaV1FnWW5rZ1NHVnBaR2tnWm05eUlFdE9RUzFTUlZOVUlHOXVJREExTHpJd0x6SXdNakVnS0hWemFXNW5JRVJCVWxRcExpSXNJbFJvY21WbFVHeEhkV2xrSWpvaVpqSTVZV1E0TmpVdFpXUmxaaTAwWVRka0xUZ3pZV1V0WVROak5XVTNOalV6TWpWbElpd2lWR2h5WldWUWJFbGtJam96TVRFNUxDSlZjMlZ5VEc5bmFXNUpaQ0k2Tnl3aVZYTmxja3h2WjJsdUlqb2lTMlZpWVNKOSJ9.aIxk4Dig0JKVA4NbIwbnkbKdNG5xXQBjpj1Uy6SFB5c
+2021-09-16 19:51:17.043 +03:00 [INF] Pending Orders Count: 13
+2021-09-16 19:53:21.471 +03:00 [INF] Order Fulfillment Worker running at: "2021-09-16T19:53:21.4667317+03:00"
+2021-09-16 19:53:21.676 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2021-09-16 19:53:21.678 +03:00 [INF] Hosting environment: Development
+2021-09-16 19:53:21.679 +03:00 [INF] Content root path: D:\Users\ey000087\source\repos\OrderTransfer\OrderTransfer
+2021-09-16 19:55:26.023 +03:00 [INF] GetToken: 1QfZBPr5EMjPzh8lb0CU-8iwjeYiE0fNvArhv76zlpY-44047
+2021-09-16 19:55:33.096 +03:00 [INF] GetToken: eyJ0eXAiOiJqd3QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOiIxNjMxNzk2OTM2IiwiaXNzIjoiaHR0cDovL3NlY3VyZS13bXMuY29tL0F1dGhTZXJ2ZXIiLCJhdWQiOiJodHRwOi8vIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ3VzdG9tZXJWaWV3IEZhY2lsaXR5VmlldyBJbnZlbnRvcnlEZXRhaWxWaWV3IEl0ZW1WaWV3IE9yZGVyRWRpdCBPcmRlclZpZXcgT3JkZXJXcml0ZSBSZWFkUHJvcGVydGllc1RoaXJkUGFydHkgUmVjZWl2ZXJWaWV3IiwiaHR0cDovL3d3dy4zcGxDZW50cmFsLmNvbS9BdXRoU2VydmVyL2NsYWltcy91c2VyaW5mbyI6ImV5SkRiR2xsYm5SSlpDSTZOakF4T0N3aVEyeHBaVzUwUTNWemRHOXRaWEpKWkNJNk1Td2lRMnhwWlc1MElqb2lVSEp2ZG1semFXOXVaV1FnWW5rZ1NHVnBaR2tnWm05eUlFdE9RUzFTUlZOVUlHOXVJREExTHpJd0x6SXdNakVnS0hWemFXNW5JRVJCVWxRcExpSXNJbFJvY21WbFVHeEhkV2xrSWpvaVpqSTVZV1E0TmpVdFpXUmxaaTAwWVRka0xUZ3pZV1V0WVROak5XVTNOalV6TWpWbElpd2lWR2h5WldWUWJFbGtJam96TVRFNUxDSlZjMlZ5VEc5bmFXNUpaQ0k2Tnl3aVZYTmxja3h2WjJsdUlqb2lTMlZpWVNKOSJ9.SDqo4ntywRsEaW7M4_3DISZ_FaxUXIYSKz6L-wxAyuQ
+2021-09-16 19:55:48.683 +03:00 [INF] Orders Count: 0
+2021-09-16 20:55:51.820 +03:00 [INF] GetToken: KFTtVMBRCVbCJWf38YyLIEDClp3dJF1tajYJWqF4_PM-44047
+2021-09-16 20:55:52.513 +03:00 [INF] GetToken: eyJ0eXAiOiJqd3QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOiIxNjMxODAwNTU1IiwiaXNzIjoiaHR0cDovL3NlY3VyZS13bXMuY29tL0F1dGhTZXJ2ZXIiLCJhdWQiOiJodHRwOi8vIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ3VzdG9tZXJWaWV3IEZhY2lsaXR5VmlldyBJbnZlbnRvcnlEZXRhaWxWaWV3IEl0ZW1WaWV3IE9yZGVyRWRpdCBPcmRlclZpZXcgT3JkZXJXcml0ZSBSZWFkUHJvcGVydGllc1RoaXJkUGFydHkgUmVjZWl2ZXJWaWV3IiwiaHR0cDovL3d3dy4zcGxDZW50cmFsLmNvbS9BdXRoU2VydmVyL2NsYWltcy91c2VyaW5mbyI6ImV5SkRiR2xsYm5SSlpDSTZOakF4T0N3aVEyeHBaVzUwUTNWemRHOXRaWEpKWkNJNk1Td2lRMnhwWlc1MElqb2lVSEp2ZG1semFXOXVaV1FnWW5rZ1NHVnBaR2tnWm05eUlFdE9RUzFTUlZOVUlHOXVJREExTHpJd0x6SXdNakVnS0hWemFXNW5JRVJCVWxRcExpSXNJbFJvY21WbFVHeEhkV2xrSWpvaVpqSTVZV1E0TmpVdFpXUmxaaTAwWVRka0xUZ3pZV1V0WVROak5XVTNOalV6TWpWbElpd2lWR2h5WldWUWJFbGtJam96TVRFNUxDSlZjMlZ5VEc5bmFXNUpaQ0k2Tnl3aVZYTmxja3h2WjJsdUlqb2lTMlZpWVNKOSJ9.3HGZ6jUn42luO9b6omgEza9JR_eB3_MlDX66D5UPkmw
+2021-09-16 20:55:55.648 +03:00 [INF] Orders Count: 1
+2021-09-16 20:56:57.042 +03:00 [ERR] 0, Error Detail: An error occurred while sending the request. Unable to read data from the transport connection: An existing connection was forcibly closed by the remote host..
+2021-10-18 16:33:25.872 +03:00 [INF] GetToken: s6onXlKPtPve8nR9pBNgDqA4CuNTjgSTxEU88ImIA4o-44047
+2021-10-18 16:33:26.668 +03:00 [INF] GetToken: eyJ0eXAiOiJqd3QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOiIxNjM0NTQ5NjAzIiwiaXNzIjoiaHR0cDovL3NlY3VyZS13bXMuY29tL0F1dGhTZXJ2ZXIiLCJhdWQiOiJodHRwOi8vIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ3VzdG9tZXJWaWV3IEZhY2lsaXR5VmlldyBJbnZlbnRvcnlEZXRhaWxWaWV3IEl0ZW1WaWV3IE9yZGVyRWRpdCBPcmRlclZpZXcgT3JkZXJXcml0ZSBSZWFkUHJvcGVydGllc1RoaXJkUGFydHkgUmVjZWl2ZXJWaWV3IiwiaHR0cDovL3d3dy4zcGxDZW50cmFsLmNvbS9BdXRoU2VydmVyL2NsYWltcy91c2VyaW5mbyI6ImV5SkRiR2xsYm5SSlpDSTZOakF4T0N3aVEyeHBaVzUwUTNWemRHOXRaWEpKWkNJNk1Td2lRMnhwWlc1MElqb2lVSEp2ZG1semFXOXVaV1FnWW5rZ1NHVnBaR2tnWm05eUlFdE9RUzFTUlZOVUlHOXVJREExTHpJd0x6SXdNakVnS0hWemFXNW5JRVJCVWxRcExpSXNJbFJvY21WbFVHeEhkV2xrSWpvaVpqSTVZV1E0TmpVdFpXUmxaaTAwWVRka0xUZ3pZV1V0WVROak5XVTNOalV6TWpWbElpd2lWR2h5WldWUWJFbGtJam96TVRFNUxDSlZjMlZ5VEc5bmFXNUpaQ0k2Tnl3aVZYTmxja3h2WjJsdUlqb2lTMlZpWVNKOSJ9.KDOOC32XPw4H-Vt4oTpBHMSDbl4Ozse8aVSKURx_y5A
+2021-10-18 16:33:29.779 +03:00 [INF] Orders Count: 0
+2021-10-18 16:33:31.170 +03:00 [INF] Order Delivery Worker running at: "2021-10-18T16:33:31.1653633+03:00"
+2021-10-18 16:33:33.015 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2021-10-18 16:33:33.017 +03:00 [INF] Hosting environment: Development
+2021-10-18 16:33:33.019 +03:00 [INF] Content root path: D:\Users\ey000087\source\repos\OrderTransfer\OrderTransfer
+2021-10-18 16:34:38.801 +03:00 [INF] Orders Count: 0
+2021-10-18 16:34:38.804 +03:00 [INF] Order Delivery Worker running at: "2021-10-18T16:34:38.8020536+03:00"
+2021-10-18 16:35:41.492 +03:00 [INF] Orders Count: 0
+2021-10-18 16:35:41.494 +03:00 [INF] Order Delivery Worker running at: "2021-10-18T16:35:41.4924906+03:00"
+2021-10-18 16:36:44.051 +03:00 [INF] Orders Count: 0
+2021-10-18 16:36:44.058 +03:00 [INF] Order Delivery Worker running at: "2021-10-18T16:36:44.0528727+03:00"
+2021-10-18 16:37:47.778 +03:00 [INF] Orders Count: 0
+2021-10-18 16:37:47.780 +03:00 [INF] Order Delivery Worker running at: "2021-10-18T16:37:47.7789452+03:00"
+2021-10-18 16:38:52.974 +03:00 [INF] Orders Count: 0
+2021-10-18 16:38:52.977 +03:00 [INF] Order Delivery Worker running at: "2021-10-18T16:38:52.9748584+03:00"
+2021-10-18 16:39:55.283 +03:00 [INF] Orders Count: 0
+2021-10-18 16:39:55.285 +03:00 [INF] Order Delivery Worker running at: "2021-10-18T16:39:55.2836925+03:00"
+2021-10-18 16:41:00.574 +03:00 [INF] Orders Count: 0
+2021-10-18 16:41:00.577 +03:00 [INF] Order Delivery Worker running at: "2021-10-18T16:41:00.5747376+03:00"
+2021-10-18 16:42:05.868 +03:00 [INF] Orders Count: 0
+2021-10-18 16:42:05.871 +03:00 [INF] Order Delivery Worker running at: "2021-10-18T16:42:05.8685350+03:00"
+2021-10-18 16:43:12.523 +03:00 [INF] Orders Count: 0
+2021-10-18 16:43:12.525 +03:00 [INF] Order Delivery Worker running at: "2021-10-18T16:43:12.5234496+03:00"
+2021-10-18 16:44:15.156 +03:00 [INF] Orders Count: 0
+2021-10-18 16:44:15.161 +03:00 [INF] Order Delivery Worker running at: "2021-10-18T16:44:15.1568248+03:00"
+2021-10-18 16:45:21.388 +03:00 [INF] Orders Count: 0
+2021-10-18 16:45:21.390 +03:00 [INF] Order Delivery Worker running at: "2021-10-18T16:45:21.3889996+03:00"
+2021-10-18 16:46:26.753 +03:00 [INF] Orders Count: 0
+2021-10-18 16:46:26.755 +03:00 [INF] Order Delivery Worker running at: "2021-10-18T16:46:26.7535718+03:00"
+2021-11-05 13:03:52.463 +03:00 [INF] GetToken: 23KHDlZR7395dIoChkttQfLKnUjcejPLrI8TvlINGdg-44047
+2021-11-05 13:03:56.989 +03:00 [INF] GetToken: eyJ0eXAiOiJqd3QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOiIxNjM2MDkyMjM3IiwiaXNzIjoiaHR0cDovL3NlY3VyZS13bXMuY29tL0F1dGhTZXJ2ZXIiLCJhdWQiOiJodHRwOi8vIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ3VzdG9tZXJWaWV3IEZhY2lsaXR5VmlldyBJbnZlbnRvcnlEZXRhaWxWaWV3IEl0ZW1WaWV3IE9yZGVyRWRpdCBPcmRlclZpZXcgT3JkZXJXcml0ZSBSZWFkUHJvcGVydGllc1RoaXJkUGFydHkgUmVjZWl2ZXJWaWV3IiwiaHR0cDovL3d3dy4zcGxDZW50cmFsLmNvbS9BdXRoU2VydmVyL2NsYWltcy91c2VyaW5mbyI6ImV5SkRiR2xsYm5SSlpDSTZOakF4T0N3aVEyeHBaVzUwUTNWemRHOXRaWEpKWkNJNk1Td2lRMnhwWlc1MElqb2lVSEp2ZG1semFXOXVaV1FnWW5rZ1NHVnBaR2tnWm05eUlFdE9RUzFTUlZOVUlHOXVJREExTHpJd0x6SXdNakVnS0hWemFXNW5JRVJCVWxRcExpSXNJbFJvY21WbFVHeEhkV2xrSWpvaVpqSTVZV1E0TmpVdFpXUmxaaTAwWVRka0xUZ3pZV1V0WVROak5XVTNOalV6TWpWbElpd2lWR2h5WldWUWJFbGtJam96TVRFNUxDSlZjMlZ5VEc5bmFXNUpaQ0k2Tnl3aVZYTmxja3h2WjJsdUlqb2lTMlZpWVNKOSJ9.Llc8KEb0QpL_jyUG6YT7kqmoACvOmjdG3Z362OF94QM
+2021-11-05 13:04:14.522 +03:00 [INF] Orders Count: 0
+2021-11-05 13:04:19.506 +03:00 [INF] Order Delivery Worker running at: "2021-11-05T13:04:19.4969888+03:00"
+2021-11-05 13:04:19.950 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2021-11-05 13:04:19.953 +03:00 [INF] Hosting environment: Development
+2021-11-05 13:04:19.955 +03:00 [INF] Content root path: D:\Users\ey000087\source\repos\OrderTransfer\OrderTransfer
+2021-11-05 13:05:23.848 +03:00 [INF] Orders Count: 0
+2021-11-05 13:05:23.856 +03:00 [INF] Order Delivery Worker running at: "2021-11-05T13:05:23.8491679+03:00"
+2021-11-05 13:06:24.862 +03:00 [INF] Orders Count: 0
+2021-11-05 13:06:24.866 +03:00 [INF] Order Delivery Worker running at: "2021-11-05T13:06:24.8634577+03:00"
+2021-11-05 13:07:26.412 +03:00 [INF] Orders Count: 0
+2021-11-05 13:07:26.415 +03:00 [INF] Order Delivery Worker running at: "2021-11-05T13:07:26.4130963+03:00"
+2021-11-05 13:08:48.756 +03:00 [INF] GetToken: BcKV572VJ6y7gi5p0UCf8T38vR3c_iPhiBS3r7yG9-8-44047
+2021-11-05 13:08:49.387 +03:00 [INF] GetToken: eyJ0eXAiOiJqd3QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOiIxNjM2MDkyNTI5IiwiaXNzIjoiaHR0cDovL3NlY3VyZS13bXMuY29tL0F1dGhTZXJ2ZXIiLCJhdWQiOiJodHRwOi8vIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ3VzdG9tZXJWaWV3IEZhY2lsaXR5VmlldyBJbnZlbnRvcnlEZXRhaWxWaWV3IEl0ZW1WaWV3IE9yZGVyRWRpdCBPcmRlclZpZXcgT3JkZXJXcml0ZSBSZWFkUHJvcGVydGllc1RoaXJkUGFydHkgUmVjZWl2ZXJWaWV3IiwiaHR0cDovL3d3dy4zcGxDZW50cmFsLmNvbS9BdXRoU2VydmVyL2NsYWltcy91c2VyaW5mbyI6ImV5SkRiR2xsYm5SSlpDSTZOakF4T0N3aVEyeHBaVzUwUTNWemRHOXRaWEpKWkNJNk1Td2lRMnhwWlc1MElqb2lVSEp2ZG1semFXOXVaV1FnWW5rZ1NHVnBaR2tnWm05eUlFdE9RUzFTUlZOVUlHOXVJREExTHpJd0x6SXdNakVnS0hWemFXNW5JRVJCVWxRcExpSXNJbFJvY21WbFVHeEhkV2xrSWpvaVpqSTVZV1E0TmpVdFpXUmxaaTAwWVRka0xUZ3pZV1V0WVROak5XVTNOalV6TWpWbElpd2lWR2h5WldWUWJFbGtJam96TVRFNUxDSlZjMlZ5VEc5bmFXNUpaQ0k2Tnl3aVZYTmxja3h2WjJsdUlqb2lTMlZpWVNKOSJ9.IiDirFaX7aTxnc8ePk9m6xzQF4gtQS4cOtX7SQk0Joc
+2021-11-05 13:09:13.777 +03:00 [INF] Pending Orders Count: 9
+2021-11-05 13:20:26.894 +03:00 [WRN]  The tracking number of the order number 112-1420632-7506619 is null
+2021-11-05 13:20:44.806 +03:00 [WRN]  The tracking number of the order number 114-2597838-4685867 is null
+2021-11-05 13:21:36.691 +03:00 [WRN]  The tracking number of the order number 114-6922269-4630606 is null
+2021-11-05 13:26:18.024 +03:00 [WRN] No results were returned for order #4106 from 3pl central
+2021-11-05 13:26:36.892 +03:00 [WRN] No results were returned for order #4104 from 3pl central
+2021-11-05 13:26:43.421 +03:00 [WRN] No results were returned for order #4103 from 3pl central
+2021-11-05 13:26:52.405 +03:00 [WRN] No results were returned for order 5548033 from 3pl central
+2021-11-05 13:26:59.844 +03:00 [WRN] No results were returned for order #4008 from 3pl central
+2021-11-05 13:27:04.978 +03:00 [WRN] No results were returned for order 402650700865-991878104027 from 3pl central
+2021-11-05 13:27:09.934 +03:00 [INF] Order Fulfillment Worker running at: "2021-11-05T13:27:09.9103474+03:00"
+2021-11-05 13:27:10.387 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2021-11-05 13:27:10.395 +03:00 [INF] Hosting environment: Development
+2021-11-05 13:27:10.400 +03:00 [INF] Content root path: D:\Users\ey000087\source\repos\OrderTransfer\OrderTransfer
+2021-11-05 13:28:06.154 +03:00 [INF] GetToken: O_obJu0xcU3RfDeahRR8DCUh5L5QYBJ-wLp2DaUpe80-44047
+2021-11-05 13:28:06.814 +03:00 [INF] GetToken: eyJ0eXAiOiJqd3QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOiIxNjM2MDkzNjg3IiwiaXNzIjoiaHR0cDovL3NlY3VyZS13bXMuY29tL0F1dGhTZXJ2ZXIiLCJhdWQiOiJodHRwOi8vIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ3VzdG9tZXJWaWV3IEZhY2lsaXR5VmlldyBJbnZlbnRvcnlEZXRhaWxWaWV3IEl0ZW1WaWV3IE9yZGVyRWRpdCBPcmRlclZpZXcgT3JkZXJXcml0ZSBSZWFkUHJvcGVydGllc1RoaXJkUGFydHkgUmVjZWl2ZXJWaWV3IiwiaHR0cDovL3d3dy4zcGxDZW50cmFsLmNvbS9BdXRoU2VydmVyL2NsYWltcy91c2VyaW5mbyI6ImV5SkRiR2xsYm5SSlpDSTZOakF4T0N3aVEyeHBaVzUwUTNWemRHOXRaWEpKWkNJNk1Td2lRMnhwWlc1MElqb2lVSEp2ZG1semFXOXVaV1FnWW5rZ1NHVnBaR2tnWm05eUlFdE9RUzFTUlZOVUlHOXVJREExTHpJd0x6SXdNakVnS0hWemFXNW5JRVJCVWxRcExpSXNJbFJvY21WbFVHeEhkV2xrSWpvaVpqSTVZV1E0TmpVdFpXUmxaaTAwWVRka0xUZ3pZV1V0WVROak5XVTNOalV6TWpWbElpd2lWR2h5WldWUWJFbGtJam96TVRFNUxDSlZjMlZ5VEc5bmFXNUpaQ0k2Tnl3aVZYTmxja3h2WjJsdUlqb2lTMlZpWVNKOSJ9.aOWfCOklC2QcDXaB_bneQxJUDK7L58oknh8_ngM6Ufw
+2021-11-05 13:28:07.622 +03:00 [INF] Orders Count: 0
+2021-11-05 13:28:07.636 +03:00 [INF] Order Delivery Worker running at: "2021-11-05T13:28:07.6232313+03:00"
+2021-11-05 13:28:13.122 +03:00 [INF] Pending Orders Count: 9
+2021-11-05 13:28:13.990 +03:00 [WRN] The tracking number of the order number 112-1420632-7506619 is null
+2021-11-05 13:28:14.927 +03:00 [WRN] The tracking number of the order number 114-2597838-4685867 is null
+2021-11-05 13:28:15.777 +03:00 [WRN] The tracking number of the order number 114-6922269-4630606 is null
+2021-11-05 13:28:16.396 +03:00 [WRN] No results were returned for order #4106 from 3pl central
+2021-11-05 13:28:17.018 +03:00 [WRN] No results were returned for order #4104 from 3pl central
+2021-11-05 13:28:17.622 +03:00 [WRN] No results were returned for order #4103 from 3pl central
+2021-11-05 13:28:18.240 +03:00 [WRN] No results were returned for order 5548033 from 3pl central
+2021-11-05 13:28:18.848 +03:00 [WRN] No results were returned for order #4008 from 3pl central
+2021-11-05 13:28:19.491 +03:00 [WRN] No results were returned for order 402650700865-991878104027 from 3pl central
+2021-11-05 13:28:19.497 +03:00 [INF] Order Fulfillment Worker running at: "2021-11-05T13:28:19.4922810+03:00"
+2021-11-05 13:28:19.507 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2021-11-05 13:28:19.512 +03:00 [INF] Hosting environment: Development
+2021-11-05 13:28:19.517 +03:00 [INF] Content root path: D:\Users\ey000087\source\repos\OrderTransfer\OrderTransfer
+2021-11-05 13:29:09.545 +03:00 [INF] Orders Count: 0
+2021-11-05 13:29:09.552 +03:00 [INF] Order Delivery Worker running at: "2021-11-05T13:29:09.5455921+03:00"
+2021-11-05 13:29:20.281 +03:00 [INF] Pending Orders Count: 9
+2021-11-05 13:29:20.961 +03:00 [WRN] The tracking number of the order number 112-1420632-7506619 is null
+2021-11-05 13:29:21.635 +03:00 [WRN] The tracking number of the order number 114-2597838-4685867 is null
+2021-11-05 13:29:22.312 +03:00 [WRN] The tracking number of the order number 114-6922269-4630606 is null
+2021-11-05 13:29:25.827 +03:00 [WRN] No results were returned for order #4106 from 3pl central
+2021-11-05 13:29:26.454 +03:00 [WRN] No results were returned for order #4104 from 3pl central
+2021-11-05 13:29:27.059 +03:00 [WRN] No results were returned for order #4103 from 3pl central
+2021-11-05 13:29:27.680 +03:00 [WRN] No results were returned for order 5548033 from 3pl central
+2021-11-05 13:29:28.280 +03:00 [WRN] No results were returned for order #4008 from 3pl central
+2021-11-05 13:29:29.313 +03:00 [WRN] No results were returned for order 402650700865-991878104027 from 3pl central
+2021-11-05 13:29:29.317 +03:00 [INF] Order Fulfillment Worker running at: "2021-11-05T13:29:29.3136919+03:00"
+2021-11-05 13:30:10.368 +03:00 [INF] Orders Count: 0
+2021-11-05 13:30:10.372 +03:00 [INF] Order Delivery Worker running at: "2021-11-05T13:30:10.3691835+03:00"
+2021-11-05 13:30:30.374 +03:00 [INF] Pending Orders Count: 9
+2021-11-05 13:30:31.066 +03:00 [WRN] The tracking number of the order number 112-1420632-7506619 is null
+2021-11-05 13:30:31.740 +03:00 [WRN] The tracking number of the order number 114-2597838-4685867 is null
+2021-11-05 13:30:32.447 +03:00 [WRN] The tracking number of the order number 114-6922269-4630606 is null
+2021-11-05 13:30:33.056 +03:00 [WRN] No results were returned for order #4106 from 3pl central
+2021-11-05 13:30:34.327 +03:00 [WRN] No results were returned for order #4104 from 3pl central
+2021-11-05 13:30:34.926 +03:00 [WRN] No results were returned for order #4103 from 3pl central
+2021-11-05 13:30:35.527 +03:00 [WRN] No results were returned for order 5548033 from 3pl central
+2021-11-05 13:30:36.132 +03:00 [WRN] No results were returned for order #4008 from 3pl central
+2021-11-05 13:30:36.738 +03:00 [WRN] No results were returned for order 402650700865-991878104027 from 3pl central
+2021-11-05 13:30:36.743 +03:00 [INF] Order Fulfillment Worker running at: "2021-11-05T13:30:36.7385162+03:00"
+2021-11-05 13:31:12.585 +03:00 [INF] Orders Count: 0
+2021-11-05 13:31:12.589 +03:00 [INF] Order Delivery Worker running at: "2021-11-05T13:31:12.5860608+03:00"
+2021-11-05 13:31:37.753 +03:00 [INF] Pending Orders Count: 9
+2021-11-05 13:31:38.407 +03:00 [WRN] The tracking number of the order number 112-1420632-7506619 is null
+2021-11-05 13:31:39.086 +03:00 [WRN] The tracking number of the order number 114-2597838-4685867 is null
+2021-11-05 13:31:39.793 +03:00 [WRN] The tracking number of the order number 114-6922269-4630606 is null
+2021-11-05 13:31:40.389 +03:00 [WRN] No results were returned for order #4106 from 3pl central
+2021-11-05 13:31:41.632 +03:00 [WRN] No results were returned for order #4104 from 3pl central
+2021-11-05 13:31:42.252 +03:00 [WRN] No results were returned for order #4103 from 3pl central
+2021-11-05 13:31:42.872 +03:00 [WRN] No results were returned for order 5548033 from 3pl central
+2021-11-05 13:31:43.481 +03:00 [WRN] No results were returned for order #4008 from 3pl central
+2021-11-05 13:31:44.094 +03:00 [WRN] No results were returned for order 402650700865-991878104027 from 3pl central
+2021-11-05 13:31:44.101 +03:00 [INF] Order Fulfillment Worker running at: "2021-11-05T13:31:44.0948417+03:00"
+2021-11-05 13:32:13.263 +03:00 [INF] Orders Count: 0
+2021-11-05 13:32:13.268 +03:00 [INF] Order Delivery Worker running at: "2021-11-05T13:32:13.2638914+03:00"
+2021-11-05 13:32:45.340 +03:00 [INF] Pending Orders Count: 9
+2021-11-05 13:32:46.030 +03:00 [WRN] The tracking number of the order number 112-1420632-7506619 is null
+2021-11-05 13:32:46.705 +03:00 [WRN] The tracking number of the order number 114-2597838-4685867 is null
+2021-11-05 13:32:47.457 +03:00 [WRN] The tracking number of the order number 114-6922269-4630606 is null
+2021-11-05 13:32:48.079 +03:00 [WRN] No results were returned for order #4106 from 3pl central
+2021-11-05 13:32:48.764 +03:00 [WRN] No results were returned for order #4104 from 3pl central
+2021-11-05 13:32:49.379 +03:00 [WRN] No results were returned for order #4103 from 3pl central
+2021-11-05 13:32:49.980 +03:00 [WRN] No results were returned for order 5548033 from 3pl central
+2021-11-05 13:32:50.601 +03:00 [WRN] No results were returned for order #4008 from 3pl central
+2021-11-05 13:32:51.832 +03:00 [WRN] No results were returned for order 402650700865-991878104027 from 3pl central
+2021-11-05 13:32:51.836 +03:00 [INF] Order Fulfillment Worker running at: "2021-11-05T13:32:51.8326728+03:00"
+2021-11-05 13:33:13.944 +03:00 [INF] Orders Count: 0
+2021-11-05 13:33:13.948 +03:00 [INF] Order Delivery Worker running at: "2021-11-05T13:33:13.9442127+03:00"
+2021-11-05 13:33:53.125 +03:00 [INF] Pending Orders Count: 9
+2021-11-05 13:33:53.815 +03:00 [WRN] The tracking number of the order number 112-1420632-7506619 is null
+2021-11-05 13:33:54.507 +03:00 [WRN] The tracking number of the order number 114-2597838-4685867 is null
+2021-11-05 13:33:55.203 +03:00 [WRN] The tracking number of the order number 114-6922269-4630606 is null
+2021-11-05 13:33:55.809 +03:00 [WRN] No results were returned for order #4106 from 3pl central
+2021-11-05 13:33:56.400 +03:00 [WRN] No results were returned for order #4104 from 3pl central
+2021-11-05 13:33:56.994 +03:00 [WRN] No results were returned for order #4103 from 3pl central
+2021-11-05 13:33:57.594 +03:00 [WRN] No results were returned for order 5548033 from 3pl central
+2021-11-05 13:34:01.876 +03:00 [WRN] No results were returned for order #4008 from 3pl central
+2021-11-05 13:34:02.483 +03:00 [WRN] No results were returned for order 402650700865-991878104027 from 3pl central
+2021-11-05 13:34:02.487 +03:00 [INF] Order Fulfillment Worker running at: "2021-11-05T13:34:02.4836704+03:00"
+2021-11-05 13:34:14.671 +03:00 [INF] Orders Count: 0
+2021-11-05 13:34:14.678 +03:00 [INF] Order Delivery Worker running at: "2021-11-05T13:34:14.6718285+03:00"
+2021-11-05 13:35:04.596 +03:00 [INF] Pending Orders Count: 9
+2021-11-05 13:35:05.283 +03:00 [WRN] The tracking number of the order number 112-1420632-7506619 is null
+2021-11-05 13:35:05.975 +03:00 [WRN] The tracking number of the order number 114-2597838-4685867 is null
+2021-11-05 13:35:06.803 +03:00 [WRN] The tracking number of the order number 114-6922269-4630606 is null
+2021-11-05 13:35:07.400 +03:00 [WRN] No results were returned for order #4106 from 3pl central
+2021-11-05 13:35:07.994 +03:00 [WRN] No results were returned for order #4104 from 3pl central
+2021-11-05 13:35:08.590 +03:00 [WRN] No results were returned for order #4103 from 3pl central
+2021-11-05 13:35:09.203 +03:00 [WRN] No results were returned for order 5548033 from 3pl central
+2021-11-05 13:35:09.802 +03:00 [WRN] No results were returned for order #4008 from 3pl central
+2021-11-05 13:35:10.408 +03:00 [WRN] No results were returned for order 402650700865-991878104027 from 3pl central
+2021-11-05 13:35:10.413 +03:00 [INF] Order Fulfillment Worker running at: "2021-11-05T13:35:10.4087089+03:00"
+2021-11-05 13:35:15.432 +03:00 [INF] Orders Count: 0
+2021-11-05 13:35:15.435 +03:00 [INF] Order Delivery Worker running at: "2021-11-05T13:35:15.4326517+03:00"
+2021-11-05 13:36:12.200 +03:00 [INF] Pending Orders Count: 9
+2021-11-05 13:36:12.846 +03:00 [WRN] The tracking number of the order number 112-1420632-7506619 is null
+2021-11-05 13:36:13.556 +03:00 [WRN] The tracking number of the order number 114-2597838-4685867 is null
+2021-11-05 13:36:14.207 +03:00 [WRN] The tracking number of the order number 114-6922269-4630606 is null
+2021-11-05 13:36:14.822 +03:00 [WRN] No results were returned for order #4106 from 3pl central
+2021-11-05 13:36:15.436 +03:00 [WRN] No results were returned for order #4104 from 3pl central
+2021-11-05 13:36:16.047 +03:00 [WRN] No results were returned for order #4103 from 3pl central
+2021-11-05 13:36:16.107 +03:00 [INF] Orders Count: 0
+2021-11-05 13:36:16.114 +03:00 [INF] Order Delivery Worker running at: "2021-11-05T13:36:16.1076836+03:00"
+2021-11-05 13:36:16.798 +03:00 [WRN] No results were returned for order 5548033 from 3pl central
+2021-11-05 13:36:17.401 +03:00 [WRN] No results were returned for order #4008 from 3pl central
+2021-11-05 13:36:17.998 +03:00 [WRN] No results were returned for order 402650700865-991878104027 from 3pl central
+2021-11-05 13:36:18.002 +03:00 [INF] Order Fulfillment Worker running at: "2021-11-05T13:36:17.9986524+03:00"

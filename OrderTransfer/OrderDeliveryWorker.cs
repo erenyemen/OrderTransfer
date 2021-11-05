@@ -59,15 +59,25 @@ namespace OrderTransfer
                 // Channel Advisor'dan Order bilgilerini getirir.
                 List<Order> listAdvisorOrders = _apiAdvisor.GetOrders();
 
-                foreach (var item in listAdvisorOrders.OrderByDescending(x => x.CreatedDateUtc))// OrderByDescending(x => x.CreatedDateUtc)
+                if (listAdvisorOrders.Count() > 0)
                 {
-                    // 3PL Cental' a sipariþ (order) gönderiliyor.
-                    var res = _apiCentral.PostOrders<PostOrderResponse>(CreateTplCentralObject(item));
-
-                    if (res.IsSuccessful)
+                    foreach (var item in listAdvisorOrders.OrderByDescending(x => x.CreatedDateUtc))// OrderByDescending(x => x.CreatedDateUtc)
                     {
-                        // Channel Advisor' da sipariþ, 'Bekleyen Sevkiyat (Pending Shipment)' durumuna çekiliyor.
-                        var resPut = _apiAdvisor.PutOrder<string>(item.ID);
+                        try
+                        {
+                            // 3PL Cental' a sipariþ (order) gönderiliyor.
+                            var res = _apiCentral.PostOrders<PostOrderResponse>(CreateTplCentralObject(item));
+
+                            if (res.IsSuccessful)
+                            {
+                                // Channel Advisor' da sipariþ, 'Bekleyen Sevkiyat (Pending Shipment)' durumuna çekiliyor.
+                                var resPut = _apiAdvisor.PutOrder<string>(item.ID);
+                            }
+                        }
+                        catch (Exception exp)
+                        {
+                            _logger.LogError(exp.Message);
+                        }
                     }
                 }
 

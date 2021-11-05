@@ -21,7 +21,8 @@ namespace OrderTransfer.Helpers.Serializer
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, ex.Message);
+                //logger.LogError(ex, ex.Message);
+                logger.LogError(ex.Message);
                 return null;
             }
 

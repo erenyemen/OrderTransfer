@@ -77,6 +77,13 @@ namespace OrderTransfer.Helpers.ChannelAdvisor
             request.AddHeader("Content-Type", "application/json");
 
             var responseObject = CallApi<OrderResponse, ChannelAdvisorApiHelper>($"{_settings.BaseURL}{_settings.GetOrders_URL}", request, _logger);
+
+            if (responseObject.Result is null)
+            {
+                _logger.LogError($"Method Name: GetOrders - Result in different format from api. Api Url: {_settings.BaseURL}{_settings.GetOrders_URL}");
+                return new List<Order>();
+            }
+
             result = responseObject.Result.value;
 
             // paging
@@ -86,7 +93,11 @@ namespace OrderTransfer.Helpers.ChannelAdvisor
                 var nextLink = responseObject.Result.OdataNextLink;
                 do
                 {
-                    responseOdataNextLink = CallApi<OrderResponse, ChannelAdvisorApiHelper>(nextLink, request, _logger).Result;
+                    var res = CallApi<OrderResponse, ChannelAdvisorApiHelper>(nextLink, request, _logger);
+
+                    if (res.Result is null)  break;
+
+                    responseOdataNextLink = res.Result;
                     result.AddRange(responseOdataNextLink.value);
 
                     nextLink = responseOdataNextLink.OdataNextLink;
@@ -149,6 +160,13 @@ namespace OrderTransfer.Helpers.ChannelAdvisor
             request.AddHeader("Content-Type", "application/json");
 
             var responseObject = CallApi<OrderResponse, ChannelAdvisorApiHelper>($"{_settings.BaseURL}{_settings.GetPendingOrder_URL}", request, _logger);
+
+            if (responseObject.Result is null)
+            {
+                _logger.LogError($"Method Name: GetPendingOrders - Result in different format from api. Api Url: {_settings.BaseURL}{_settings.GetOrders_URL}");
+                return new List<Order>();
+            }
+
             result = responseObject.Result.value;
 
             // paging
@@ -158,7 +176,11 @@ namespace OrderTransfer.Helpers.ChannelAdvisor
                 var nextLink = responseObject.Result.OdataNextLink;
                 do
                 {
-                    responseOdataNextLink = CallApi<OrderResponse, ChannelAdvisorApiHelper>(nextLink, request, _logger).Result;
+                    var res = CallApi<OrderResponse, ChannelAdvisorApiHelper>(nextLink, request, _logger);
+
+                    if (res.Result is null) break;
+
+                    responseOdataNextLink = res.Result;
                     result.AddRange(responseOdataNextLink.value);
 
                     nextLink = responseOdataNextLink.OdataNextLink;
